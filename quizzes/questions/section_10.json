@@ -1,0 +1,91 @@
+[
+  {
+    "id": "s10-q01",
+    "section": 10,
+    "type": "single",
+    "question": "What is the Bell state (|00> + |11>)/sqrt(2) called?",
+    "choices": [
+      "Phi+",
+      "Psi+",
+      "Phi-",
+      "Psi-"
+    ],
+    "answer": 0,
+    "explanation": "|Phi+> = (|00> + |11>)/sqrt(2) is the 'plus' phase state.",
+    "difficulty": 1
+  },
+  {
+    "id": "s10-q02",
+    "section": 10,
+    "type": "truefalse",
+    "question": "Measuring one qubit of a Bell pair instantly determines the state of the other -- but that does not allow faster-than-light messaging.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "The correlation is real, but the outcome on the receiving side is completely random.",
+    "difficulty": 1
+  },
+  {
+    "id": "s10-q03",
+    "section": 10,
+    "type": "single",
+    "question": "How much entanglement entropy does a Bell pair have?",
+    "choices": [
+      "0 bits",
+      "1 bit",
+      "2 bits",
+      "1/2 bit"
+    ],
+    "answer": 1,
+    "explanation": "The reduced state of one qubit is maximally mixed, so the entropy is one bit.",
+    "difficulty": 1
+  },
+  {
+    "id": "s10-q04",
+    "section": 10,
+    "type": "multi",
+    "question": "Which statements about entanglement are true?",
+    "choices": [
+      "A product state is not entangled",
+      "Entanglement cannot be created by a local unitary alone",
+      "Entanglement can be destroyed by tracing out one qubit",
+      "A Bell pair can be cloned"
+    ],
+    "answer": [
+      0,
+      1,
+      2
+    ],
+    "explanation": "No-cloning means you cannot duplicate the pair and keep both copies entangled.",
+    "difficulty": 1
+  },
+  {
+    "id": "s10-q05",
+    "section": 10,
+    "type": "single",
+    "question": "The CHSH parameter S for a Bell pair is...",
+    "choices": [
+      "1",
+      "2",
+      "2*sqrt(2)",
+      "4"
+    ],
+    "answer": 2,
+    "explanation": "Classical correlations reach S = 2; quantum correlations reach 2*sqrt(2) ~ 2.83.",
+    "difficulty": 1
+  },
+  {
+    "id": "s10-q06",
+    "section": 10,
+    "type": "single",
+    "question": "What is the maximum entanglement entropy of a 4-qubit maximally entangled state?",
+    "choices": [
+      "1 bit",
+      "2 bits",
+      "4 bits",
+      "8 bits"
+    ],
+    "answer": 1,
+    "explanation": "n/2 bits: a maximally entangled n-qubit state carries n/2 bits.",
+    "difficulty": 1
+  }
+]

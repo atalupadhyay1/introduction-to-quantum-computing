@@ -1,0 +1,218 @@
+<h1 id="section-17-quantum-machine-learning-with-qiskit">Section 17 — Quantum Machine Learning with Qiskit</h1>
+<blockquote>
+<p><strong>Course section</strong> 17 of 17 · <strong>Lab</strong> <a href="../labs/L17_quantum_machine_learning/lab.py"><code>L17</code></a> · <strong>Quiz</strong> 7 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Run the classical KNN and the quantum KNN side by side, and show they
+  agree.</li>
+<li>Explain the quantum KNN mathematically: why the interference amplitude is
+  the square root of four times the classical weight.</li>
+<li>Explain support vector machines, soft margins, the kernel trick and
+  one-vs-rest.</li>
+<li>Train a quantum support vector machine on the iris dataset.</li>
+</ul>
+<h2 id="the-lectures">The lectures</h2>
+<table>
+<thead>
+<tr>
+<th>Lecture</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KNN Problem Description</td>
+<td>the task: two training points, one query</td>
+</tr>
+<tr>
+<td>Code for Classical KNN</td>
+<td>the algorithm in Python</td>
+</tr>
+<tr>
+<td>Code for Quantum KNN</td>
+<td>the circuit</td>
+</tr>
+<tr>
+<td>Math for Classical KNN</td>
+<td>normalisation, distance, weights</td>
+</tr>
+<tr>
+<td>Math Prerequisites for Quantum KNN</td>
+<td>amplitude encoding and interference</td>
+</tr>
+<tr>
+<td>Math for Quantum KNN</td>
+<td>the quantum KNN worked out</td>
+</tr>
+<tr>
+<td>Connecting Math and Code (classical)</td>
+<td>the two agree</td>
+</tr>
+<tr>
+<td>Connecting Math and Code (quantum)</td>
+<td>the two agree</td>
+</tr>
+<tr>
+<td>Introduction to Classification</td>
+<td>decision boundaries</td>
+</tr>
+<tr>
+<td>SVMs: Separation</td>
+<td>the maximum-margin hyperplane</td>
+</tr>
+<tr>
+<td>SVMs: Overfitting</td>
+<td>one rogue point ruins the boundary</td>
+</tr>
+<tr>
+<td>SVMs: Soft Margins</td>
+<td>the hinge loss and the C parameter</td>
+</tr>
+<tr>
+<td>SVMs: Higher Dimensions and Kernels</td>
+<td>the kernel trick</td>
+</tr>
+<tr>
+<td>SVMs: Multiple Classes</td>
+<td>one-vs-rest and one-vs-one</td>
+</tr>
+<tr>
+<td>Quantum Support Vector Machines</td>
+<td>the ZZ feature map and QSVC</td>
+</tr>
+<tr>
+<td>Significance of Quantum ML</td>
+<td>the honest summary</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-classical-knn">The classical KNN</h2>
+<p>Normalise the vectors, compute the squared Euclidean distance, turn each
+distance into a weight, and normalise the weights into probabilities:</p>
+<div class="arithmatex">\[
+w_i = 1 - 0.25\, d_i^2, \qquad
+P(c \mid x) = \frac{\sum_{i \in c} w_i}{\sum_i w_i}
+\]</div>
+<p>On the course's data this gives <span class="arithmatex">\(P(1) = 0.5244\)</span> and <span class="arithmatex">\(P(0) = 0.4756\)</span>.</p>
+<h2 id="the-quantum-knn-and-why-it-works">The quantum KNN, and why it works</h2>
+<p>The circuit encodes the training vectors and the query as <em>amplitudes</em>, and
+a Hadamard on a "training vs query" qubit makes the two halves interfere.
+At a slot holding a training component <span class="arithmatex">\(v_i\)</span> and the query component <span class="arithmatex">\(q_i\)</span>,
+the amplitude in the training half becomes</p>
+<div class="arithmatex">\[
+\frac{v_i + q_i}{2\sqrt2}
+\]</div>
+<p>and now the identity that makes the whole thing work:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\sum_i (v_i + q_i)^2 &amp;= \sum_i \bigl(v_i^2 + q_i^2 + 2 v_i q_i\bigr)
+= 2 + 2\sum_i v_i q_i\\
+\text{and}\quad w &amp;= 1 - 0.25\,d^2 = 1 - 0.25\bigl(2 - 2\sum_i v_i q_i\bigr)
+= 0.5\bigl(1 + \sum_i v_i q_i\bigr)
+\end{aligned}
+\]</div>
+<p>so</p>
+<div class="arithmatex">\[
+\sum_i (v_i + q_i)^2 = 4\,w
+\]</div>
+<p><strong>The interference amplitude is the square root of four times the classical
+weight.</strong> Because the probabilities in each class sum to the same total
+denominator, the <em>conditional</em> probability of measuring a class is exactly
+the classical normalised weight.</p>
+<p>The lab confirms this three ways: 20 000 shots give <span class="arithmatex">\(P(1) = 0.5248\)</span>
+against the classical <span class="arithmatex">\(0.5244\)</span>, and the exact statevector answer agrees to
+machine precision.</p>
+<h2 id="support-vector-machines">Support vector machines</h2>
+<p>An SVM finds the <strong>widest empty strip</strong> between two classes. The boundary
+sits between two hyperplanes <span class="arithmatex">\(w \cdot x + b = \pm 1\)</span>, the margin is
+<span class="arithmatex">\(2/\lVert w\rVert\)</span>, and only the points touching the hyperplanes — the
+<em>support vectors</em> — constrain the solution.</p>
+<ul>
+<li><strong>Overfitting:</strong> one mislabelled point far out on the wrong side drags
+  the whole boundary with it. The lab shows a clean dataset separated
+  perfectly and a spoiled one that is not.</li>
+<li><strong>Soft margins:</strong> allow violations and charge for them,
+  <span class="arithmatex">\(\min \tfrac12\lVert w\rVert^2 + C\sum_i \text{slack}_i\)</span>. Big <span class="arithmatex">\(C\)</span> means
+  few mistakes and a weird boundary; small <span class="arithmatex">\(C\)</span> means mistakes are cheap and
+  the boundary stays smooth.</li>
+<li><strong>Kernels:</strong> <span class="arithmatex">\(K(x,z) = \phi(x)\cdot\phi(z)\)</span> lets you use a linear SVM in
+  a high-dimensional feature space without ever building <span class="arithmatex">\(\phi\)</span>. The
+  polynomial kernel <span class="arithmatex">\((x \cdot z + c)^d\)</span> is the standard example — and on
+  the rings dataset, the linear kernel scores 0.50 while the polynomial
+  kernel scores 0.96.</li>
+<li><strong>Multiple classes:</strong> one-vs-rest (one binary SVM per class) or
+  one-vs-one (one per pair).</li>
+</ul>
+<h2 id="quantum-support-vector-machines">Quantum support vector machines</h2>
+<p>The quantum kernel is</p>
+<div class="arithmatex">\[
+K(x, z) = \bigl|\langle \phi(x) \mid \phi(z)\rangle\bigr|^2
+\]</div>
+<p>with <span class="arithmatex">\(\lvert\phi(x)\rangle = U(x)\lvert0\rangle^n\)</span>. The course uses the
+<strong>ZZ feature map</strong> with 4 features, 2 repetitions and linear entanglement.
+The lab computes a kernel entry directly from the state vectors, then
+trains a real <code>QSVC</code> on the iris dataset and reproduces the course's
+predictions: <code>[5.0, 3.3, 1.5, 0.3] → 0</code> and <code>[6.0, 2.9, 5.2, 1.7] → 2</code>.</p>
+<p>The course's original <code>qsvm.py</code> used <code>BasicAer</code>, <code>QuantumInstance</code> and
+<code>algorithm_globals</code>, all removed in Qiskit 1.0. The modern equivalents are
+<code>FidelityQuantumKernel</code> with a <code>QMLSampler</code>, and <code>QSVC(quantum_kernel=...)</code>.</p>
+<h2 id="the-significance-honestly">The significance — honestly</h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Reality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"a quantum computer learns faster"</td>
+<td>not shown; data loading usually dominates</td>
+</tr>
+<tr>
+<td>"the quantum kernel is exponentially rich"</td>
+<td>true in principle, hard to exploit</td>
+</tr>
+<tr>
+<td>"you can read out the whole feature map"</td>
+<td>no — you read out an expectation value</td>
+</tr>
+<tr>
+<td>"it is a drop-in replacement"</td>
+<td>yes: the kernel is the interface</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Quantum machine learning is <strong>not</strong> a speed-up for everything. It is a
+   new way to compute a similarity.</li>
+<li>The useful part is the <strong>kernel</strong>: a quantum circuit can evaluate a
+   function of two data points that is awkward to write down classically.</li>
+<li>Everything else — the loss, the optimizer, the train/test split — stays
+   classical, exactly as in section 16.</li>
+<li>The real obstacle is <strong>hardware</strong>: today's devices are noisy, and a deep
+   feature map needs a lot of error correction before it beats a classical
+   kernel machine.</li>
+</ol>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L17_quantum_machine_learning/lab.py</code></pre>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you derive <span class="arithmatex">\(\sum_i (v_i + q_i)^2 = 4w\)</span> from the definitions?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain what the Hadamard on the "training vs query" qubit
+      does, in terms of sum and difference?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know what the margin of an SVM is, and what <span class="arithmatex">\(C\)</span> controls?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you write the quantum kernel and explain what the feature map
+      does?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L17_quantum_machine_learning/lab.py</code> and
+      seen the quantum KNN match the classical one?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>You have reached the end of the course. Two good next steps:</p>
+<ul>
+<li>run <code>python tools/quiz.py</code> and <code>python tools/progress.py</code> to see where you
+  stand;</li>
+<li>read the <a href="appendix/appendix.md">appendix</a> for the formula sheet, the
+  glossary and the API reference for the shared library.</li>
+</ul>

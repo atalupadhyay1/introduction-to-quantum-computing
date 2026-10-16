@@ -1,0 +1,113 @@
+<h1 id="section-4-quantum-cryptography">Section 4 — Quantum Cryptography</h1>
+<blockquote>
+<p><strong>Course section</strong> 4 of 17 · <strong>Lab</strong> <a href="../labs/L07_bb84_cryptography/lab.py"><code>L07</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Run the BB84 protocol end to end and explain every step.</li>
+<li>Compute the quantum bit error rate for the no-eve, same-basis-eve and
+  random-basis-eve cases.</li>
+<li>Say why a one-time pad is unconditionally secure and what it needs.</li>
+<li>Explain why classical "public key" cryptography is a different game.</li>
+</ul>
+<h2 id="the-protocol-bb84-1984">The protocol (BB84, 1984)</h2>
+<p>Bennett and Brassard named their protocol after the year. Each round:</p>
+<ol>
+<li><strong>Alice</strong> picks a random bit <span class="arithmatex">\(b \in \{0,1\}\)</span> and a random basis
+   <span class="arithmatex">\(B \in \{Z, X\}\)</span>.</li>
+<li>Alice sends a photon prepared in that basis: <span class="arithmatex">\(Z\)</span> (rectilinear, 0°/90°)
+   or <span class="arithmatex">\(X\)</span> (diagonal, 45°/135°).</li>
+<li><strong>Bob</strong> picks a random basis <span class="arithmatex">\(B'\)</span> and measures.</li>
+<li>Alice and Bob <strong>publicly announce their bases</strong> (never the bit values).</li>
+<li>They keep only the rounds where <span class="arithmatex">\(B = B'\)</span>; those bits form the key.</li>
+</ol>
+<p>The security rests on one fact: <strong>measuring in the wrong basis destroys the
+information</strong>. A photon in state <span class="arithmatex">\(|+\rangle\)</span> measured in the <span class="arithmatex">\(Z\)</span> basis gives
+<span class="arithmatex">\(0\)</span> or <span class="arithmatex">\(1\)</span> with equal probability, no matter what it "really" was.</p>
+<h2 id="the-quantum-bit-error-rate">The quantum bit error rate</h2>
+<p>Let <span class="arithmatex">\(Q\)</span> be the fraction of sifted bits that disagree. This is the number
+that reveals an eavesdropper.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>QBER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No eavesdropper</td>
+<td><span class="arithmatex">\(0\%\)</span></td>
+</tr>
+<tr>
+<td>Eve intercepts and resends <strong>in the basis she measured in</strong> (the textbook attack)</td>
+<td><span class="arithmatex">\(25\%\)</span></td>
+</tr>
+<tr>
+<td>Eve intercepts and resends <strong>in a random basis</strong></td>
+<td><span class="arithmatex">\(37.5\%\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where 25% comes from.</strong> Eve measures each photon in a basis of her own
+choosing and resends a fresh photon in <em>that</em> basis.</p>
+<ul>
+<li>With probability <span class="arithmatex">\(\tfrac12\)</span> she happens to pick Alice's basis, so she
+  measures the bit correctly and resends it correctly — no error.</li>
+<li>With probability <span class="arithmatex">\(\tfrac12\)</span> she picks the other basis, so her result is
+  random, and Bob's reading of her resend is random too — a 50% error rate.</li>
+</ul>
+<div class="arithmatex">\[
+Q = \tfrac12 \cdot 0 + \tfrac12 \cdot \tfrac12 = \tfrac14 = 25\%
+\]</div>
+<p><strong>Where 37.5% comes from.</strong> A noisier but stronger attack: Eve resends in
+a <em>random</em> basis instead of the one she measured in. Then</p>
+<ul>
+<li><span class="arithmatex">\(\tfrac14\)</span> of the time she measures Alice's basis <em>and</em> resends in
+  Alice's basis: no error at all;</li>
+<li><span class="arithmatex">\(\tfrac14\)</span> of the time she measures the wrong basis but resends in
+  Alice's basis: her bit is random, so a 50% error rate;</li>
+<li><span class="arithmatex">\(\tfrac12\)</span> of the time she resends in the wrong basis: Bob's reading is
+  random, so a 50% error rate.</li>
+</ul>
+<div class="arithmatex">\[
+Q = \tfrac14 \cdot 0 + \tfrac14 \cdot \tfrac12 + \tfrac12 \cdot \tfrac12
+= \tfrac38 = 37.5\%
+\]</div>
+<p>Both are far above the threshold, so both are caught.</p>
+<p><strong>The threshold.</strong> In a one-way BB84 system, aborting when <span class="arithmatex">\(Q &gt; 11\%\)</span> is
+the standard rule. The bound is <span class="arithmatex">\(Q_{\text{intercept}} \approx 0.1464\)</span>,
+and the abort threshold is roughly <span class="arithmatex">\(\frac{2}{3}\)</span> of that.</p>
+<h2 id="the-one-time-pad">The one-time pad</h2>
+<p>BB84 only gives you a shared <em>random</em> key. To encrypt a message with it you
+need the one-time pad:</p>
+<div class="arithmatex">\[
+C = M \oplus K, \qquad M = C \oplus K
+\]</div>
+<p>It is <strong>unconditionally secure</strong> — secure regardless of how much
+computation the eavesdropper can do — but only if:</p>
+<ul>
+<li>the key is used <strong>once</strong> and only once;</li>
+<li>the key is <strong>uniformly random</strong>;</li>
+<li>the key is <strong>the same length</strong> as the message;</li>
+<li>the key is shared <strong>secretly</strong>.</li>
+</ul>
+<p>Reuse a key and XOR-ing the two ciphertexts leaks the XOR of the two
+plaintexts. That is exactly how the Vigenère cipher falls.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L07_bb84_cryptography/lab.py</code></pre>
+<p>The lab runs the full protocol, sifts the key, measures the QBER in all
+three scenarios, and then applies a one-time pad to a message and shows the
+ciphertext decrypts perfectly.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain why the bases may be announced publicly but the bit
+      values may not?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you derive the 25% QBER figure from scratch?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know the three requirements of a one-time pad, and what
+      happens if you break each one?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L07_bb84_cryptography/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 5 — <a href="05-math-model.md">A Math Model for Quantum Physics</a>. You have
+seen the physics; now build the formal model that makes it computable.</p>

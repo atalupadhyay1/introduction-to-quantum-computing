@@ -1,0 +1,95 @@
+<h1 id="section-12-the-quantum-computing-model">Section 12 — The Quantum Computing Model</h1>
+<blockquote>
+<p><strong>Course section</strong> 12 of 17 · <strong>Lab</strong> <a href="../labs/L13_quantum_computing_model/lab.py"><code>L13</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Name the three stages of a quantum program and why each is what it is.</li>
+<li>Compile a gate list into a single unitary matrix and apply it to any input.</li>
+<li>Distinguish a state-vector simulator from a shot-based device.</li>
+<li>Work out the depth and gate count of a circuit.</li>
+</ul>
+<h2 id="the-three-stage-program">The three-stage program</h2>
+<pre class="highlight"><code>  1. INITIALISE   (irreversible)   prepare the qubits in a known state
+  2. COMPUTE      (reversible)     apply gates
+  3. READ OUT     (irreversible)   measure</code></pre>
+<p>The middle stage is reversible because the <em>whole</em> program, including
+initialisation and measurement, is a quantum channel. This is why a quantum
+computer is a strange device: the interesting part (the computation) can be
+undone, but the part that produces the answer cannot.</p>
+<h2 id="compiling-a-circuit-to-a-matrix">Compiling a circuit to a matrix</h2>
+<p>A gate list <span class="arithmatex">\([g_1, g_2, \dots, g_k]\)</span> acting on a column state vector
+compiles to a single matrix:</p>
+<div class="arithmatex">\[
+U = G_k \cdots G_2 G_1
+\]</div>
+<p><strong>Order matters.</strong> Gates are applied left to right to the <em>state</em>, so the
+first gate's matrix is on the <em>right</em>. The lab checks this explicitly
+because getting it backwards produces plausible but wrong answers.</p>
+<p>The compiled matrix is the circuit's unitary, and it has two great
+properties: it can be applied to any input state, and it can be inverted
+(<span class="arithmatex">\(\text{circuit}^{-1}\)</span> is the reversed gate list with each gate replaced by
+its adjoint).</p>
+<h2 id="simulator-versus-device">Simulator versus device</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>state-vector simulator</th>
+<th>real device (or shot-based simulator)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>returns</td>
+<td>exact complex amplitudes</td>
+<td>integer counts</td>
+</tr>
+<tr>
+<td>answers</td>
+<td>"the probability is 0.3141..."</td>
+<td>"the probability is about 0.31"</td>
+</tr>
+<tr>
+<td>cost</td>
+<td>memory <span class="arithmatex">\(\propto 2^n\)</span></td>
+<td>time <span class="arithmatex">\(\propto\)</span> shots <span class="arithmatex">\(\times\)</span> depth</td>
+</tr>
+<tr>
+<td>noise</td>
+<td>none</td>
+<td>decoherence, gate error, readout error</td>
+</tr>
+</tbody>
+</table>
+<p>Both are <em>correct</em> answers to different questions. The course's
+<code>simulate_circuit.py</code> uses 1000 shots precisely so you see the difference
+between the two.</p>
+<h2 id="circuit-size">Circuit size</h2>
+<p>For an <span class="arithmatex">\(n\)</span>-qubit circuit:</p>
+<ul>
+<li>the state vector has <span class="arithmatex">\(2^n\)</span> complex amplitudes (16 bytes each);</li>
+<li>a full <span class="arithmatex">\(2^n \times 2^n\)</span> unitary has <span class="arithmatex">\(2^{2n}\)</span> entries — for <span class="arithmatex">\(n = 10\)</span> that
+  is a <em>billion</em> entries, which is why simulators never build the full
+  matrix;</li>
+<li>a real device needs the <em>depth</em> and the <em>gate count</em>, not the state size.</li>
+</ul>
+<p>That is the fundamental trade: the simulator's cost explodes with the state
+size, the device's cost grows with the circuit.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L13_quantum_computing_model/lab.py</code></pre>
+<p>The lab builds a gate-list compiler, checks that the compiled matrix
+reproduces the circuit's result, verifies that the inverse circuit undoes
+the original, and contrasts state-vector output with counts.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you say which stage of a quantum program is irreversible and why
+      each one is?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know which side of the matrix product the first gate goes on?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain why a simulator does not build a full <span class="arithmatex">\(2^n \times 2^n\)</span>
+      matrix?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L13_quantum_computing_model/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 13 — <a href="13-qsharp.md">Microsoft Q# Programming</a>. Your first real
+quantum programming language.</p>

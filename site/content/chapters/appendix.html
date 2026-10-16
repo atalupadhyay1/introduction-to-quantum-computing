@@ -1,0 +1,65 @@
+<h1 id="appendix">Appendix</h1>
+<p>Three reference sections:</p>
+<ul>
+<li><a href="formula-sheet.md">Formula sheet</a> — every equation the course uses, on one
+  page.</li>
+<li><a href="glossary.md">Glossary</a> — the vocabulary, in one place.</li>
+<li><a href="api-reference.md">API reference</a> — the shared <code>qc101</code> library that every
+  lab is built on.</li>
+</ul>
+<h2 id="reading-order-for-the-appendix">Reading order for the appendix</h2>
+<p>If you are revising for an exam, read the <strong>formula sheet</strong> first, then
+skim the <strong>glossary</strong> for terms you could not define, then use the <strong>API
+reference</strong> as a lookup while you work through the labs.</p>
+<h2 id="everything-in-one-place">Everything in one place</h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The 17 course sections</td>
+<td><a href="../index.md">the index</a></td>
+</tr>
+<tr>
+<td>Chapter guides</td>
+<td><a href="../"><code>docs/</code></a></td>
+</tr>
+<tr>
+<td>Runnable labs</td>
+<td><a href="../labs/"><code>labs/</code></a></td>
+</tr>
+<tr>
+<td>The shared library</td>
+<td><a href="../labs/common/qc101/"><code>labs/common/qc101/</code></a></td>
+</tr>
+<tr>
+<td>Q# program</td>
+<td><a href="../qsharp/QB4/"><code>qsharp/QB4/</code></a></td>
+</tr>
+<tr>
+<td>Quizzes</td>
+<td><a href="../quizzes/"><code>quizzes/</code></a></td>
+</tr>
+<tr>
+<td>The study site</td>
+<td><a href="../site/"><code>site/</code></a></td>
+</tr>
+<tr>
+<td>Notebooks</td>
+<td><a href="../notebooks/"><code>notebooks/</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-note-on-accuracy">A note on accuracy</h2>
+<p>Every number quoted in this package was produced by running the code in
+this repository, not by transcribing the course's slides. The labs are
+auto-graded, and <code>python tools/labcheck.py</code> re-checks all 350 assertions,
+so if you change a library and break something, the runner will tell you.</p>
+<p>The derivations that are <em>not</em> in the course videos but were needed to make
+the quantum KNN work are written out in
+<a href="../17-quantum-ml.md">chapter 17</a> and in
+<a href="../17-quantum-ml.md"><code>docs/17-quantum-ml.md</code></a>.</p>

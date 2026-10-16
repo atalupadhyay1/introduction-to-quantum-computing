@@ -1,0 +1,316 @@
+<h1 id="api-reference-the-shared-qc101-library">API reference -- the shared <code>qc101</code> library</h1>
+<p>Every lab in this repository is built on one small, dependency-free Python
+package:</p>
+<pre class="highlight"><code>labs/common/qc101/
+    complexnum.py    complex arithmetic
+    boolean.py       Boolean algebra, truth tables, logic gates
+    probability.py   probability rules, random variables, statistics
+    linalg.py        matrices, vectors, eigenvalues, the Kronecker product
+    quantum.py       qubit states, gates, multi-qubit systems, entanglement
+    photon.py        photon polarization and the Malus cascade
+    bb84.py          the BB84 protocol and the QBER
+    viz.py           ASCII tables, bar charts, histograms, Bloch spheres
+    labkit.py        the Lab harness the labs are written against
+    selftest.py      167 self-checks for the library itself</code></pre>
+<p>It deliberately avoids numpy and Qiskit, so the <em>maths</em> labs run in any
+Python 3.8+ environment.  The Qiskit-based labs (L14-L17) import Qiskit
+directly.</p>
+<h2 id="the-lab-harness">The <code>Lab</code> harness</h2>
+<p>Every lab is written against <code>qc101.labkit.Lab</code>:</p>
+<pre class="highlight"><code class="language-python">from qc101.labkit import Lab
+
+lab = Lab("L01", "Quantum computing versus classical computing")
+
+lab.section("1. A heading")
+lab.step("What you are about to do")
+lab.note("An aside")
+lab.show("some output")
+lab.check("a claim that must be true", condition, "detail on failure")
+lab.check_close("a numeric claim", got, expected, tol=1e-6)
+lab.check_equal("an exact claim", got, expected)
+
+if __name__ == "__main__":
+    sys.exit(lab.finish())</code></pre>
+<p><code>lab.finish()</code> prints the summary and returns the exit code: 0 if every
+check passed, 1 otherwise.  That is what <code>tools/labcheck.py</code> relies on.</p>
+<h2 id="qc101complexnum"><code>qc101.complexnum</code></h2>
+<p>Complex-number arithmetic: addition, multiplication, division, conjugate, modulus, polar form.</p>
+<h3 id="adda-complex-b-complex-complex"><code>add(a: 'complex', b: 'complex') -&gt; 'complex'</code></h3>
+<p>Return <code>a + b</code>.</p>
+<h3 id="conjugatez-complex-complex"><code>conjugate(z: 'complex') -&gt; 'complex'</code></h3>
+<p>Return the complex conjugate <code>a - bi</code>.</p>
+<h3 id="diva-complex-b-complex-complex"><code>div(a: 'complex', b: 'complex') -&gt; 'complex'</code></h3>
+<p>Divide <code>a / b</code> using the complex-conjugate method.</p>
+<h3 id="div_realz-complex-k-float-complex"><code>div_real(z: 'complex', k: 'float') -&gt; 'complex'</code></h3>
+<p>Divide a complex number by a non-zero real scalar.</p>
+<h3 id="eulerr-float-theta-float-complex"><code>euler(r: 'float', theta: 'float') -&gt; 'complex'</code></h3>
+<p>Euler's formula: <code>r * e^(i*theta) = r*(cos(theta) + i*sin(theta))</code>.</p>
+<h3 id="format_listvalues-iterablecomplex-places-int-4-str"><code>format_list(values: 'Iterable[complex]', places: 'int' = 4) -&gt; 'str'</code></h3>
+<p>Render an iterable of complex numbers as a bracketed list.</p>
+<h3 id="from_polarr-float-theta-float-complex"><code>from_polar(r: 'float', theta: 'float') -&gt; 'complex'</code></h3>
+<p>Convert polar form <code>(r, theta)</code> back to <code>a + bi</code>.</p>
+<h3 id="magnitudez-complex-float"><code>magnitude(z: 'complex') -&gt; 'float'</code></h3>
+<p>Return <code>|z| = sqrt(a^2 + b^2)</code>.</p>
+<h3 id="mula-complex-b-complex-complex"><code>mul(a: 'complex', b: 'complex') -&gt; 'complex'</code></h3>
+<p>Multiply two complex numbers, treating <code>i</code> as an unknown with <code>i**2 = -1</code>.</p>
+<h3 id="mul_realk-float-z-complex-complex"><code>mul_real(k: 'float', z: 'complex') -&gt; 'complex'</code></h3>
+<p>Multiply a complex number by a real scalar: <code>k * (a + bi) = ka + kbi</code>.</p>
+<h3 id="nth_rootsz-complex-n-int-listcomplex"><code>nth_roots(z: 'complex', n: 'int') -&gt; 'List[complex]'</code></h3>
+<p>Return the <code>n</code> distinct <code>n</code>-th roots of <code>z</code>.</p>
+<h3 id="polar_prettyz-complex-places-int-4-str"><code>polar_pretty(z: 'complex', places: 'int' = 4) -&gt; 'str'</code></h3>
+<p>Render a complex number in polar form, e.g. <code>1.414 e^(i*0.7854)</code>.</p>
+<h3 id="powerz-complex-exponent-float-complex"><code>power(z: 'complex', exponent: 'float') -&gt; 'complex'</code></h3>
+<p>Complex exponentiation via polar form: <code>z**p = r**p * e^(i*p*theta)</code>.</p>
+<h3 id="prettyz-complex-places-int-4-str"><code>pretty(z: 'complex', places: 'int' = 4) -&gt; 'str'</code></h3>
+<p>Render a complex number in the familiar <code>a + bi</code> style used in the course.</p>
+<h3 id="sqrt_i-tuplecomplex-complex"><code>sqrt_i() -&gt; 'Tuple[complex, complex]'</code></h3>
+<p>The two square roots of <code>i</code>:</p>
+<h3 id="squared_magnitudez-complex-float"><code>squared_magnitude(z: 'complex') -&gt; 'float'</code></h3>
+<p>Return <code>|z|^2 = a^2 + b^2</code> (equivalently <code>z * conj(z)</code>).</p>
+<h3 id="suba-complex-b-complex-complex"><code>sub(a: 'complex', b: 'complex') -&gt; 'complex'</code></h3>
+<p>Return <code>a - b</code>.</p>
+<h3 id="to_polarz-complex-tuplefloat-float"><code>to_polar(z: 'complex') -&gt; 'Tuple[float, float]'</code></h3>
+<p>Convert <code>a + bi</code> to polar form <code>(r, theta)</code>.</p>
+<h2 id="qc101boolean"><code>qc101.boolean</code></h2>
+<p>Boolean algebra: truth tables, expressions, and the classical logic gates.</p>
+<h3 id="anda-bit-b-bit-bit"><code>AND(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>AND gate: 1 only when both inputs are 1.</p>
+<h3 id="nanda-bit-b-bit-bit"><code>NAND(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>NAND gate: NOT(AND(a, b)). A universal gate.</p>
+<h3 id="nora-bit-b-bit-bit"><code>NOR(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>NOR gate: NOT(OR(a, b)).</p>
+<h3 id="nota-bit-bit"><code>NOT(a: 'Bit') -&gt; 'Bit'</code></h3>
+<p>NOT gate: flips the bit.</p>
+<h3 id="ora-bit-b-bit-bit"><code>OR(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>OR gate: 1 when at least one input is 1.</p>
+<h3 id="xora-bit-b-bit-bit"><code>XOR(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>Exclusive OR: 1 exactly when the two inputs differ.</p>
+<h3 id="and_from_or_nota-bit-b-bit-bit"><code>and_from_or_not(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>AND built only from OR and NOT gates.</p>
+<h3 id="bit_frequencybits-iterablebit-float"><code>bit_frequency(bits: 'Iterable[Bit]') -&gt; 'float'</code></h3>
+<p>Fraction of 1-bits in a sequence (the mean of a Bernoulli variable).</p>
+<h3 id="decryptcipher-sequencebit-key-sequencebit-str"><code>decrypt(cipher: 'Sequence[Bit]', key: 'Sequence[Bit]') -&gt; 'str'</code></h3>
+<p>Decrypt an XOR cipher by XOR-ing with the same shared secret again.</p>
+<h3 id="encryptmessage-str-key-sequencebit-listbit"><code>encrypt(message: 'str', key: 'Sequence[Bit]') -&gt; 'List[Bit]'</code></h3>
+<p>Encrypt a text message with XOR against a shared secret bit sequence.</p>
+<h3 id="hamming_distancea-sequencebit-b-sequencebit-int"><code>hamming_distance(a: 'Sequence[Bit]', b: 'Sequence[Bit]') -&gt; 'int'</code></h3>
+<p>Number of positions where two equal-length bit strings differ.</p>
+<h3 id="nand_to_anda-bit-b-bit-bit"><code>nand_to_and(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>AND built from a single NAND gate: <code>AND = NOT(NAND)</code>.</p>
+<h3 id="nand_to_nota-bit-bit"><code>nand_to_not(a: 'Bit') -&gt; 'Bit'</code></h3>
+<p>NOT built from a NAND gate: <code>NOT A = NAND(A, A)</code>.</p>
+<h3 id="nand_to_ora-bit-b-bit-bit"><code>nand_to_or(a: 'Bit', b: 'Bit') -&gt; 'Bit'</code></h3>
+<p>OR built from NAND gates: <code>OR = NAND(NOT A, NOT B)</code>.</p>
+<h3 id="one_time_pad_decryptcipher-sequencebit-pad-sequencebit-str"><code>one_time_pad_decrypt(cipher: 'Sequence[Bit]', pad: 'Sequence[Bit]') -&gt; 'str'</code></h3>
+<p>Decrypt a one-time pad message.</p>
+<h3 id="one_time_pad_encryptmessage-str-rng-randomrandom-none-none-tuplelistbit-listbit"><code>one_time_pad_encrypt(message: 'str', rng: 'random.Random | None' = None) -&gt; 'Tuple[List[Bit], List[Bit]]'</code></h3>
+<p>Encrypt with a <em>fresh random</em> one-time pad.</p>
+<h3 id="render_truth_tablefn-expr-inputs-sequencestr-a-b-output-str-out-str"><code>render_truth_table(fn: 'Expr', inputs: 'Sequence[str]' = ('A', 'B'), output: 'str' = 'OUT') -&gt; 'str'</code></h3>
+<p>Render a truth table as a nicely aligned text table.</p>
+<h3 id="truth_tablefn-expr-inputs-sequencestr-a-b-listtupletuplebit-bit"><code>truth_table(fn: 'Expr', inputs: 'Sequence[str]' = ('A', 'B')) -&gt; 'List[Tuple[Tuple[Bit, ...], Bit]]'</code></h3>
+<p>Build the truth table of a boolean function.</p>
+<h3 id="xor_bitstringsa-sequencebit-b-sequencebit-listbit"><code>xor_bitstrings(a: 'Sequence[Bit]', b: 'Sequence[Bit]') -&gt; 'List[Bit]'</code></h3>
+<p>Element-wise XOR of two bit sequences.</p>
+<h2 id="qc101probability"><code>qc101.probability</code></h2>
+<p>Probability rules, discrete random variables and descriptive statistics.</p>
+<h3 id="bernoullip-float-05-name-str-x-randomvariable"><code>bernoulli(p: 'float' = 0.5, name: 'str' = 'X') -&gt; 'RandomVariable'</code></h3>
+<p>Bernoulli distribution: 0 with probability <code>1-p</code> and 1 with probability <code>p</code>.</p>
+<h3 id="coinp_head-float-05-name-str-x-randomvariable"><code>coin(p_head: 'float' = 0.5, name: 'str' = 'X') -&gt; 'RandomVariable'</code></h3>
+<p>A coin mapping heads to +1 and tails to -1 (the course convention).</p>
+<h3 id="correlationx-sequencefloat-y-sequencefloat-float"><code>correlation(x: 'Sequence[float]', y: 'Sequence[float]') -&gt; 'float'</code></h3>
+<p>Pearson correlation coefficient of two samples, in <code>[-1, 1]</code>.</p>
+<h3 id="dicesides-int-6-loaded-dictint-float-none-none-name-str-x-randomvariable"><code>dice(sides: 'int' = 6, loaded: 'Dict[int, float] | None' = None, name: 'str' = 'X') -&gt; 'RandomVariable'</code></h3>
+<p>A die.  <code>loaded</code> optionally overrides some face probabilities; the remaining probability mass is spread uniformly over the other faces.</p>
+<h3 id="joint_distributionrv_x-randomvariable-rv_y-randomvariable-independent-bool-true-dicttuplefloat-float-float"><code>joint_distribution(rv_x: 'RandomVariable', rv_y: 'RandomVariable', independent: 'bool' = True) -&gt; 'Dict[Tuple[float, float], float]'</code></h3>
+<p>Joint distribution of two random variables.</p>
+<h3 id="meanvalues-sequencefloat-float"><code>mean(values: 'Sequence[float]') -&gt; 'float'</code></h3>
+<p>Arithmetic mean of a sample.</p>
+<h3 id="p_andp_a-float-p_b-float-p_a_and_b-float-none-none-float"><code>p_and(p_a: 'float', p_b: 'float', p_a_and_b: 'float | None' = None) -&gt; 'float'</code></h3>
+<p><code>P(A and B) = P(A) * P(B)</code> when A and B are independent.</p>
+<h3 id="p_conditionalp_a_and_b-float-p_a-float-float"><code>p_conditional(p_a_and_b: 'float', p_a: 'float') -&gt; 'float'</code></h3>
+<p>Conditional probability: <code>P(B | A) = P(A and B) / P(A)</code>.</p>
+<h3 id="p_from_jointp_a_and_b-float-p_a_and_not_b-float-float"><code>p_from_joint(p_a_and_b: 'float', p_a_and_not_b: 'float') -&gt; 'float'</code></h3>
+<p>Recover <code>P(A)</code> from a decomposition of the sample space.</p>
+<h3 id="p_independentp_a-float-p_b-float-tuplefloat-float"><code>p_independent(p_a: 'float', p_b: 'float') -&gt; 'Tuple[float, float]'</code></h3>
+<p>For independent events: <code>P(A and B) = P(A)*P(B)</code> and <code>P(A or B) = P(A) + P(B) - P(A)*P(B)</code>.</p>
+<h3 id="p_mutually_exclusivep_a-float-p_b-float-tuplefloat-float"><code>p_mutually_exclusive(p_a: 'float', p_b: 'float') -&gt; 'Tuple[float, float]'</code></h3>
+<p>For mutually exclusive events: <code>P(A and B) = 0</code> and <code>P(A or B) = P(A) + P(B)</code>.</p>
+<h3 id="p_notp_a-float-float"><code>p_not(p_a: 'float') -&gt; 'float'</code></h3>
+<p><code>P(not A) = 1 - P(A)</code>.</p>
+<h3 id="p_orp_a-float-p_b-float-p_a_and_b-float-00-float"><code>p_or(p_a: 'float', p_b: 'float', p_a_and_b: 'float' = 0.0) -&gt; 'float'</code></h3>
+<p>The general addition rule: <code>P(A or B) = P(A) + P(B) - P(A and B)</code>.</p>
+<h3 id="standard_deviationvalues-sequencefloat-ddof-int-0-float"><code>standard_deviation(values: 'Sequence[float]', ddof: 'int' = 0) -&gt; 'float'</code></h3>
+<p>Standard deviation: <code>sqrt(variance)</code>.</p>
+<h3 id="variancevalues-sequencefloat-ddof-int-0-float"><code>variance(values: 'Sequence[float]', ddof: 'int' = 0) -&gt; 'float'</code></h3>
+<p>Variance of a sample.  <code>ddof=0</code> (default) uses the population formula <code>E[(X-mu)^2]</code>; <code>ddof=1</code> uses the unbiased sample estimator.</p>
+<h3 id="class-randomvariabledistribution-dictfloat-float-name-str-x"><code>class RandomVariable(distribution: 'Dict[float, float]', name: 'str' = 'X')</code></h3>
+<p>A discrete random variable: a mapping from outcome values to probabilities.</p>
+<ul>
+<li><code>mean(self) -&gt; 'float'</code> — Expected value: <code>E[X] = sum(x * P(x))</code>.</li>
+<li><code>sample(self, n: 'int' = 1, rng: 'random.Random | None' = None) -&gt; 'List[float]'</code> — Draw <code>n</code> samples from the distribution.</li>
+<li><code>second_moment(self) -&gt; 'float'</code> — <code>E[X^2]</code>.</li>
+<li><code>standard_deviation(self) -&gt; 'float'</code> — <code>sigma = sqrt(Var[X])</code>.</li>
+<li><code>table(self) -&gt; 'str'</code> — Render the distribution as an aligned text table.</li>
+<li><code>variance(self) -&gt; 'float'</code> — <code>Var[X] = E[(X - mu)^2] = E[X^2] - mu^2</code>.</li>
+</ul>
+<h2 id="qc101linalg"><code>qc101.linalg</code></h2>
+<p>Matrices and vectors: products, adjoints, inverses, eigenvalues, and the Kronecker product.</p>
+<h3 id="adda-matrix-b-matrix-matrix"><code>add(a: 'Matrix', b: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Element-wise addition.</p>
+<h3 id="adjointm-matrix-matrix"><code>adjoint(m: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>The adjoint (dagger): transpose of the complex conjugate.</p>
+<h3 id="conjugatem-matrix-matrix"><code>conjugate(m: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Complex-conjugate every element.</p>
+<h3 id="determinantm-matrix-complex"><code>determinant(m: 'Matrix') -&gt; 'complex'</code></h3>
+<p>Determinant via cofactor expansion (fine for the small matrices used here).</p>
+<h3 id="dimsm-matrix-tupleint-int"><code>dims(m: 'Matrix') -&gt; 'Tuple[int, int]'</code></h3>
+<p>Return <code>(rows, cols)</code> of a matrix.</p>
+<h3 id="eigenpairs_2x2m-matrix-listtuplecomplex-vector"><code>eigenpairs_2x2(m: 'Matrix') -&gt; 'List[Tuple[complex, Vector]]'</code></h3>
+<p>Return <code>[(eigenvalue, eigenvector), ...]</code> for a 2x2 matrix.</p>
+<h3 id="eigenvalues_2x2m-matrix-listcomplex"><code>eigenvalues_2x2(m: 'Matrix') -&gt; 'List[complex]'</code></h3>
+<p>Eigenvalues of a 2x2 matrix from the characteristic polynomial <code>lambda^2 - tr(A) lambda + det(A) = 0</code>.</p>
+<h3 id="format_matrixm-matrix-fmt-str-83f-str"><code>format_matrix(m: 'Matrix', fmt: 'str' = '{:&gt;8.3f}') -&gt; 'str'</code></h3>
+<p>Render a matrix as an aligned text table (real and imaginary parts).</p>
+<h3 id="hermitian_eigenvaluesm-matrix-max_sweeps-int-100-listfloat"><code>hermitian_eigenvalues(m: 'Matrix', max_sweeps: 'int' = 100) -&gt; 'List[float]'</code></h3>
+<p>Eigenvalues of a <strong>Hermitian</strong> matrix (A = A^dagger), returned as real numbers sorted in increasing order.</p>
+<h3 id="identityn-int-matrix"><code>identity(n: 'int') -&gt; 'Matrix'</code></h3>
+<p>The n x n identity matrix.</p>
+<h3 id="inner_producta-vector-b-vector-complex"><code>inner_product(a: 'Vector', b: 'Vector') -&gt; 'complex'</code></h3>
+<p>The conjugate inner product <code>&lt;a|b&gt; = sum_i conj(a_i) * b_i</code>.</p>
+<h3 id="inversem-matrix-matrix"><code>inverse(m: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Matrix inverse via Gauss-Jordan elimination with partial pivoting.</p>
+<h3 id="is_hermitianm-matrix-tol-float-1e-09-bool"><code>is_hermitian(m: 'Matrix', tol: 'float' = 1e-09) -&gt; 'bool'</code></h3>
+<p>True when <code>A^dagger = A</code>.</p>
+<h3 id="is_identitym-matrix-tol-float-1e-09-bool"><code>is_identity(m: 'Matrix', tol: 'float' = 1e-09) -&gt; 'bool'</code></h3>
+<p>True when the matrix equals the identity matrix.</p>
+<h3 id="is_squarem-matrix-bool"><code>is_square(m: 'Matrix') -&gt; 'bool'</code></h3>
+<p>True when the matrix has as many rows as columns.</p>
+<h3 id="is_unitarym-matrix-tol-float-1e-09-bool"><code>is_unitary(m: 'Matrix', tol: 'float' = 1e-09) -&gt; 'bool'</code></h3>
+<p>True when <code>A^dagger A = I</code>.</p>
+<h3 id="jacobi_eigenvalues_reala-listlistfloat-max_sweeps-int-100-tol-float-1e-14-listfloat"><code>jacobi_eigenvalues_real(a: 'List[List[float]]', max_sweeps: 'int' = 100, tol: 'float' = 1e-14) -&gt; 'List[float]'</code></h3>
+<p>Eigenvalues of a <strong>real symmetric</strong> matrix, by the Jacobi method.</p>
+<h3 id="krona-matrix-b-matrix-matrix"><code>kron(a: 'Matrix', b: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Kronecker (tensor) product -- the operation that composes qubit states.</p>
+<h3 id="matrix_equalsa-matrix-b-matrix-tol-float-1e-09-bool"><code>matrix_equals(a: 'Matrix', b: 'Matrix', tol: 'float' = 1e-09) -&gt; 'bool'</code></h3>
+<p>Element-wise comparison with a tolerance.</p>
+<h3 id="mula-matrix-b-matrix-matrix"><code>mul(a: 'Matrix', b: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Matrix multiplication, row-by-column.</p>
+<h3 id="outer_producta-vector-b-vector-matrix"><code>outer_product(a: 'Vector', b: 'Vector') -&gt; 'Matrix'</code></h3>
+<p>The outer product <code>|a&gt;&lt;b|</code> as a matrix.</p>
+<h3 id="power_iterationm-matrix-v0-vector-none-none-iterations-int-500-tol-float-1e-12-tuplecomplex-vector"><code>power_iteration(m: 'Matrix', v0: 'Vector | None' = None, iterations: 'int' = 500, tol: 'float' = 1e-12) -&gt; 'Tuple[complex, Vector]'</code></h3>
+<p>Dominant eigenpair of a matrix by power iteration.</p>
+<h3 id="rrefm-matrix-matrix"><code>rref(m: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Reduced row echelon form (used for linear-dependency checks).</p>
+<h3 id="scalek-complex-m-matrix-matrix"><code>scale(k: 'complex', m: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Multiply every element of the matrix by the scalar <code>k</code>.</p>
+<h3 id="suba-matrix-b-matrix-matrix"><code>sub(a: 'Matrix', b: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Element-wise subtraction.</p>
+<h3 id="transposem-matrix-matrix"><code>transpose(m: 'Matrix') -&gt; 'Matrix'</code></h3>
+<p>Interchange rows and columns.</p>
+<h3 id="zerosrows-int-cols-int-matrix"><code>zeros(rows: 'int', cols: 'int') -&gt; 'Matrix'</code></h3>
+<p>A rows x cols matrix of zeros.</p>
+<h2 id="qc101quantum"><code>qc101.quantum</code></h2>
+<p>The quantum model: qubit states, the standard gates, multi-qubit systems and entanglement.</p>
+<h3 id="apply_gatesv-statevector-gate-matrix-qubit-int-statevector"><code>apply_gate(sv: 'StateVector', gate: 'Matrix', qubit: 'int') -&gt; 'StateVector'</code></h3>
+<p>Functional form of <code>StateVector.apply_single</code>.</p>
+<h3 id="bell_state-statevector"><code>bell_state() -&gt; 'StateVector'</code></h3>
+<p>The Bell state <code>(|00&gt; + |11&gt;)/sqrt(2)</code> -- a maximally entangled pair.</p>
+<h3 id="brabitstring-str-str"><code>bra(bitstring: 'str') -&gt; 'str'</code></h3>
+<p>Render a bra: <code>bra("10")</code> -&gt; <code>'&lt;10|'</code>.</p>
+<h3 id="braketleft-str-right-str-str"><code>braket(left: 'str', right: 'str') -&gt; 'str'</code></h3>
+<p>Render a matrix element: <code>braket("0", "1")</code> -&gt; <code>'&lt;0|1&gt;'</code>.</p>
+<h3 id="entanglement_entropysv-statevector-float"><code>entanglement_entropy(sv: 'StateVector') -&gt; 'float'</code></h3>
+<p>Von Neumann entropy of the first half of the system.</p>
+<h3 id="ghz_staten_qubits-int-3-statevector"><code>ghz_state(n_qubits: 'int' = 3) -&gt; 'StateVector'</code></h3>
+<p>The GHZ state <code>(|00...0&gt; + |11...1&gt;)/sqrt(2)</code>.</p>
+<h3 id="is_entangledsv-statevector-bool"><code>is_entangled(sv: 'StateVector') -&gt; 'bool'</code></h3>
+<p>True when the state cannot be written as a product of two subsystems.</p>
+<h3 id="ketbitstring-str-str"><code>ket(bitstring: 'str') -&gt; 'str'</code></h3>
+<p>Render a basis state in Dirac notation: <code>ket("10")</code> -&gt; <code>'|10&gt;'</code>.</p>
+<h3 id="class-statevectoramplitudes-sequencecomplex"><code>class StateVector(amplitudes: 'Sequence[complex]')</code></h3>
+<p>A quantum state of <code>n</code> qubits, stored as a list of <code>2**n</code> amplitudes.</p>
+<ul>
+<li><code>apply_cnot(self, control: 'int', target: 'int') -&gt; "'StateVector'"</code> — Apply a CNOT gate.</li>
+<li><code>apply_single(self, gate: 'Matrix', qubit: 'int') -&gt; "'StateVector'"</code> — Apply a single-qubit gate to <code>qubit</code>.</li>
+<li><code>apply_three(self, gate: 'Matrix', q1: 'int', q2: 'int', q3: 'int') -&gt; "'StateVector'"</code> — Apply a three-qubit gate acting on <code>(q1, q2, q3)</code> in that order.</li>
+<li><code>apply_toffoli(self, control1: 'int', control2: 'int', target: 'int') -&gt; "'StateVector'"</code> — Apply a CCNOT (Toffoli) gate.</li>
+<li><code>apply_two(self, gate: 'Matrix', control: 'int', target: 'int') -&gt; "'StateVector'"</code> — Apply a two-qubit gate with the given control and target qubits.</li>
+<li><code>basis_labels(self) -&gt; 'List[str]'</code> — The bit string label of each basis state, in state-vector order.</li>
+<li><code>copy(self) -&gt; "'StateVector'"</code> — A deep copy of this state.</li>
+<li><code>density_matrix(self) -&gt; 'Matrix'</code> — The density matrix <code>|psi&gt;&lt;psi|</code> of the pure state.</li>
+<li><code>entropy(self) -&gt; 'float'</code> — The von Neumann entropy of the reduced state (0 for a product state).</li>
+<li><code>from_basis(index: 'int', n_qubits: 'int') -&gt; "'StateVector'"</code> — A basis state given by its integer index.</li>
+<li><code>from_bitstring(bits: 'str') -&gt; "'StateVector'"</code> — A basis state given by a bit string, e.g. <code>"10"</code>.</li>
+<li><code>histogram(self, rng: 'random.Random | None' = None, shots: 'int' = 1000) -&gt; 'Dict[str, int]'</code> — Sample the state <code>shots</code> times and return a bitstring histogram.</li>
+<li><code>is_normalized(self, tol: 'float' = 1e-09) -&gt; 'bool'</code> — True when the total probability is 1.</li>
+<li><code>measure(self, rng: 'random.Random | None' = None) -&gt; "Tuple[int, 'StateVector']"</code> — Measure the whole system.</li>
+<li><code>measure_qubit(self, qubit: 'int', rng: 'random.Random | None' = None) -&gt; "Tuple[int, 'StateVector']"</code> — Measure a <em>single</em> qubit (and collapse only that qubit's dimension).</li>
+<li><code>one(n_qubits: 'int' = 1) -&gt; "'StateVector'"</code> — The state with the <em>last</em> qubit set to one: <code>|00...1&gt;</code>.</li>
+<li><code>probabilities(self) -&gt; 'List[float]'</code> — Measurement probabilities: <code>|amplitude|^2</code> for each basis state.</li>
+<li><code>probability_table(self) -&gt; 'str'</code> — A text table of basis states and their probabilities.</li>
+<li><code>random(n_qubits: 'int' = 1, rng: 'random.Random | None' = None) -&gt; "'StateVector'"</code> — A uniformly random pure state (Haar-random via normalised Gaussians).</li>
+<li><code>to_dirac(self, threshold: 'float' = 1e-06) -&gt; 'str'</code> — Render the state in Dirac notation, dropping negligible terms.</li>
+<li><code>zero(n_qubits: 'int' = 1) -&gt; "'StateVector'"</code> — The all-zeros state <code>|00...0&gt;</code>.</li>
+</ul>
+<h2 id="qc101photon"><code>qc101.photon</code></h2>
+<p>Photon polarization: Malus's law, the polarization cascade and single-photon states.</p>
+<h3 id="filter_cascadephoton_angle-float-filter_angles-sequencefloat-shots-int-2000-rng-randomrandom-none-none-filtercascaderesult"><code>filter_cascade(photon_angle: 'float', filter_angles: 'Sequence[float]', shots: 'int' = 2000, rng: 'random.Random | None' = None) -&gt; 'FilterCascadeResult'</code></h3>
+<p>Run photons through a sequence of polarizers, in the <strong>Malus's law (polarizer) model</strong>.</p>
+<h3 id="malus_transmissiontheta_in-float-theta_filter-float-float"><code>malus_transmission(theta_in: 'float', theta_filter: 'float') -&gt; 'float'</code></h3>
+<p>Malus's law: the probability that a photon with polarization <code>theta_in</code> passes through a filter at <code>theta_filter</code>.</p>
+<h3 id="measurement_cascadephoton_angle-float-filter_angles-sequencefloat-shots-int-2000-rng-randomrandom-none-none-filtercascaderesult"><code>measurement_cascade(photon_angle: 'float', filter_angles: 'Sequence[float]', shots: 'int' = 2000, rng: 'random.Random | None' = None) -&gt; 'FilterCascadeResult'</code></h3>
+<p>The same cascade, but measured with the <strong>qubit model</strong> used in the course: each filter measures the photon in the {aligned, anti-aligned} basis, and afterwards the photon's state is either aligned with that filter or exactly 90 degrees from it.</p>
+<h3 id="polarization_basistheta-float-str"><code>polarization_basis(theta: 'float') -&gt; 'str'</code></h3>
+<p>Classify a polarization angle into one of four BB84 basis states.</p>
+<h3 id="class-entangledphotonmeasurementp00-float-p01-float-p10-float-p11-float-rng-randomrandom-none-none"><code>class EntangledPhotonMeasurement(p00: 'float', p01: 'float', p10: 'float', p11: 'float', rng: 'random.Random | None' = None)</code></h3>
+<p>A pair of photons described by the four amplitudes <code>(p00, p01, p10, p11)</code>.</p>
+<ul>
+<li><code>perform_measurement(self) -&gt; 'str'</code> — Perform one joint measurement.</li>
+<li><code>report_measurement_probability(self) -&gt; 'str'</code> — Report the four joint outcome probabilities plus the conditional probabilities <code>P(photon1 | photon2)</code> that expose entanglement.</li>
+<li><code>set_independent_photon_angles(self, angle1: 'float', angle2: 'float') -&gt; 'None'</code> — Model two <em>independent</em> (unentangled) photons with these angles.</li>
+<li><code>set_measurement_angles(self, angle1: 'float', angle2: 'float') -&gt; 'None'</code> — Set the orientation of the two measurement filters.</li>
+</ul>
+<h3 id="class-filtercascaderesultstage_transmission-listfloat-cumulative_transmission-listfloat-final_angle-float"><code>class FilterCascadeResult(stage_transmission: 'List[float]', cumulative_transmission: 'List[float]', final_angle: 'float')</code></h3>
+<p>The outcome of pushing photons through a sequence of polarizers.</p>
+<h3 id="class-photonpolarizationmeasurementangle-float-900-rng-randomrandom-none-none"><code>class PhotonPolarizationMeasurement(angle: 'float' = 90.0, rng: 'random.Random | None' = None)</code></h3>
+<p>A single photon with a known polarization, measured by filters.</p>
+<ul>
+<li><code>measure_polarization(self, angle: 'float') -&gt; 'bool'</code> — Measure the photon with a polarizer at <code>angle</code>.</li>
+<li><code>measure_repeated(self, angle: 'float', n: 'int' = 1000) -&gt; 'Dict[str, float]'</code> — Measure the <em>same</em> photon <code>n</code> times with the same filter.</li>
+</ul>
+<h2 id="qc101bb84"><code>qc101.bb84</code></h2>
+<p>The BB84 key-distribution protocol and the quantum bit error rate.</p>
+<h3 id="basis_anglebasis-int-bit-int-float"><code>basis_angle(basis: 'int', bit: 'int') -&gt; 'float'</code></h3>
+<p>The polarization angle that encodes <code>bit</code> in <code>basis</code>.</p>
+<h3 id="encode_anglebit-int-basis-int-float"><code>encode_angle(bit: 'int', basis: 'int') -&gt; 'float'</code></h3>
+<p>Alias of :func:<code>basis_angle</code> -- the angle Alice actually sends.</p>
+<h3 id="run_bb84rounds-int-200-eve-bool-false-eve_intercept_probability-float-10-eve_resend_mode-str-same_basis-seed-optionalint-none-verbose-bool-false-bb84result"><code>run_bb84(rounds: 'int' = 200, eve: 'bool' = False, eve_intercept_probability: 'float' = 1.0, eve_resend_mode: 'str' = 'same_basis', seed: 'Optional[int]' = None, verbose: 'bool' = False) -&gt; 'BB84Result'</code></h3>
+<p>Run the BB84 protocol end to end.</p>
+<h3 id="class-bb84resultrounds-listround-factory-alice_key-listint-factory-bob_key-listint-factory-eve_present-bool-false-eve_intercepts-int-0-none"><code>class BB84Result(rounds: 'List[Round]' = &lt;factory&gt;, alice_key: 'List[int]' = &lt;factory&gt;, bob_key: 'List[int]' = &lt;factory&gt;, eve_present: 'bool' = False, eve_intercepts: 'int' = 0) -&gt; None</code></h3>
+<p>The outcome of a full BB84 run.</p>
+<ul>
+<li><code>summary(self) -&gt; 'str'</code> — A human-readable report of the run.</li>
+</ul>
+<h3 id="class-basis"><code>class Basis()</code></h3>
+<p>The two BB84 bases.</p>
+<h3 id="class-roundindex-int-bit-int-alice_basis-int-angle-float-bob_basis-int-bob_bit-int-eve_present-bool-false-eve_basis-optionalint-none-eve_bit-optionalint-none-matched_basis-bool-false-sifted-bool-false-none"><code>class Round(index: 'int', bit: 'int', alice_basis: 'int', angle: 'float', bob_basis: 'int', bob_bit: 'int', eve_present: 'bool' = False, eve_basis: 'Optional[int]' = None, eve_bit: 'Optional[int]' = None, matched_basis: 'bool' = False, sifted: 'bool' = False) -&gt; None</code></h3>
+<p>One round of the protocol, with every random choice recorded.</p>
+<ul>
+<li><code>describe(self) -&gt; 'str'</code></li>
+</ul>
+<h2 id="qc101viz"><code>qc101.viz</code></h2>
+<p>Terminal rendering helpers: tables, bar charts, histograms and ASCII Bloch spheres.</p>
+<h3 id="bar_chartdata-dictstr-float-width-int-40-max_value-float-none-none-title-str-str"><code>bar_chart(data: 'Dict[str, float]', width: 'int' = 40, max_value: 'float | None' = None, title: 'str' = '') -&gt; 'str'</code></h3>
+<p>Render a horizontal bar chart with Unicode block characters.</p>
+<h3 id="bloch_sphere_asciix-float-y-float-z-float-size-int-13-str"><code>bloch_sphere_ascii(x: 'float', y: 'float', z: 'float', size: 'int' = 13) -&gt; 'str'</code></h3>
+<p>Render a Bloch sphere with the state as a marker, using ASCII art.</p>
+<h3 id="boxedtitle-str-body-str-width-int-68-str"><code>boxed(title: 'str', body: 'str' = '', width: 'int' = 68) -&gt; 'str'</code></h3>
+<p>Draw a titled box around <code>body</code>.</p>
+<h3 id="histogramcounts-dictstr-int-width-int-40-title-str-counts-str"><code>histogram(counts: 'Dict[str, int]', width: 'int' = 40, title: 'str' = 'Counts') -&gt; 'str'</code></h3>
+<p>Render a bar chart of measurement counts, normalised to the largest.</p>
+<h3 id="kv_tabledata-dictstr-object-key_width-int-28-str"><code>kv_table(data: 'Dict[str, object]', key_width: 'int' = 28) -&gt; 'str'</code></h3>
+<p>Render a dictionary as an aligned <code>key : value</code> block.</p>
+<h3 id="qubit_blochalpha-float-beta-float-tuplefloat-float-float"><code>qubit_bloch(alpha: 'float', beta: 'float') -&gt; 'Tuple[float, float, float]'</code></h3>
+<p>Convert the amplitudes <code>alpha</code> (for |0&gt;) and <code>beta</code> (for |1&gt;) into Bloch-sphere coordinates <code>(x, y, z)</code>.</p>
+<h3 id="tableheaders-sequencestr-rows-iterablesequenceobject-str"><code>table(headers: 'Sequence[str]', rows: 'Iterable[Sequence[object]]') -&gt; 'str'</code></h3>
+<p>Render a simple aligned text table.</p>

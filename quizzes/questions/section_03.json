@@ -1,0 +1,103 @@
+[
+  {
+    "id": "s03-q01",
+    "section": 3,
+    "type": "single",
+    "question": "What is i^2?",
+    "choices": [
+      "-1",
+      "1",
+      "i",
+      "-i"
+    ],
+    "answer": 0,
+    "explanation": "i is the square root of -1, so i^2 = -1.",
+    "difficulty": 1
+  },
+  {
+    "id": "s03-q02",
+    "section": 3,
+    "type": "number",
+    "question": "What is the modulus squared of the complex number 3 + 4i?",
+    "choices": [],
+    "answer": 25,
+    "explanation": "|3 + 4i|^2 = 3^2 + 4^2 = 25",
+    "difficulty": 1,
+    "tolerance": 1e-09
+  },
+  {
+    "id": "s03-q03",
+    "section": 3,
+    "type": "single",
+    "question": "What is (3 + 4i) * (3 - 4i)?",
+    "choices": [
+      "25",
+      "9 - 16i",
+      "-7 + 24i",
+      "-25"
+    ],
+    "answer": 0,
+    "explanation": "A complex number times its conjugate is its modulus squared: 25.",
+    "difficulty": 1
+  },
+  {
+    "id": "s03-q04",
+    "section": 3,
+    "type": "truefalse",
+    "question": "For two independent events A and B, P(A and B) = P(A) * P(B).",
+    "choices": [],
+    "answer": "true",
+    "explanation": "Independence is exactly the statement that the joint probability factorizes.",
+    "difficulty": 1
+  },
+  {
+    "id": "s03-q05",
+    "section": 3,
+    "type": "multi",
+    "question": "Which of these are axioms of Boolean algebra?",
+    "choices": [
+      "Commutativity of AND",
+      "Associativity of AND",
+      "Excluded middle",
+      "Non-contradiction"
+    ],
+    "answer": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "explanation": "Boolean algebra satisfies the classical logic laws including excluded middle and non-contradiction.",
+    "difficulty": 1
+  },
+  {
+    "id": "s03-q06",
+    "section": 3,
+    "type": "single",
+    "question": "A matrix A is unitary when...",
+    "choices": [
+      "A^T = A",
+      "A^dagger A = I",
+      "det(A) = 1",
+      "A has real entries"
+    ],
+    "answer": 1,
+    "explanation": "Unitary means the conjugate transpose is the inverse: A^dagger A = I.",
+    "difficulty": 1
+  },
+  {
+    "id": "s03-q07",
+    "section": 3,
+    "type": "single",
+    "question": "What is the probability of a quantum measurement outcome given the amplitude of that outcome?",
+    "choices": [
+      "the amplitude itself",
+      "the amplitude squared",
+      "the absolute value",
+      "the amplitude cubed"
+    ],
+    "answer": 1,
+    "explanation": "The Born rule: P = |amplitude|^2.",
+    "difficulty": 1
+  }
+]

@@ -1,0 +1,91 @@
+[
+  {
+    "id": "s13-q01",
+    "section": 13,
+    "type": "single",
+    "question": "In Microsoft Q#, how are the qubits of a register ordered when you print a result?",
+    "choices": [
+      "Left to right",
+      "Right to left",
+      "In random order",
+      "By index"
+    ],
+    "answer": 1,
+    "explanation": "Q# prints (q2, q1, q0) while the state vector is written (q0, q1, q2) -- the classic ordering trap.",
+    "difficulty": 1
+  },
+  {
+    "id": "s13-q02",
+    "section": 13,
+    "type": "truefalse",
+    "question": "A Q# operation's result array is in the same order as the qubits in the register.",
+    "choices": [],
+    "answer": "false",
+    "explanation": "The result array is reversed relative to the qubit order -- the course's 'Verifying Results' article is about exactly this.",
+    "difficulty": 1
+  },
+  {
+    "id": "s13-q02b",
+    "section": 13,
+    "type": "single",
+    "question": "What is the Q# equivalent of a measurement followed by a conditional X gate?",
+    "choices": [
+      "M followed by an if with X inside",
+      "Reset followed by H",
+      "H followed by M",
+      "A message pass"
+    ],
+    "answer": 0,
+    "explanation": "That is exactly the 'Set' operation from the course's QB4 program.",
+    "difficulty": 1
+  },
+  {
+    "id": "s13-q03",
+    "section": 13,
+    "type": "multi",
+    "question": "Which of these are genuine Q# language features?",
+    "choices": [
+      "let bindings",
+      "mutable variables",
+      "message passing between qubits",
+      "the Q# keyword 'mutable'"
+    ],
+    "answer": [
+      0,
+      2,
+      3
+    ],
+    "explanation": "Q# variables are immutable by default; 'mutable' is introduced explicitly.",
+    "difficulty": 1
+  },
+  {
+    "id": "s13-q04",
+    "section": 13,
+    "type": "single",
+    "question": "Why does the course say the Q# simulator is worth learning before Qiskit?",
+    "choices": [
+      "Because Q# is faster",
+      "Because it isolates the quantum ideas from the programming-language noise",
+      "Because Qiskit is deprecated",
+      "Because Q# runs on IBM hardware"
+    ],
+    "answer": 1,
+    "explanation": "Q# has no classical control flow to hide behind, so the quantum structure is visible.",
+    "difficulty": 1
+  },
+  {
+    "id": "s13-q05",
+    "section": 13,
+    "type": "single",
+    "question": "In the course's QB4 program, how many qubits are used?",
+    "choices": [
+      "2",
+      "3",
+      "4",
+      "8"
+    ],
+    "answer": 2,
+    "explanation": "Four qubits, with histograms over all 16 bit strings.",
+    "difficulty": 1
+  }
+]

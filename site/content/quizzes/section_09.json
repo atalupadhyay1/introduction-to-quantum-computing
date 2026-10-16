@@ -1,0 +1,91 @@
+[
+  {
+    "id": "s09-q01",
+    "section": 9,
+    "type": "single",
+    "question": "How many basis states does a system of 3 qubits have?",
+    "choices": [
+      "3",
+      "6",
+      "8",
+      "9"
+    ],
+    "answer": 2,
+    "explanation": "2^3 = 8 basis states.",
+    "difficulty": 1
+  },
+  {
+    "id": "s09-q02",
+    "section": 9,
+    "type": "single",
+    "question": "What is the Kronecker product of two qubits used for?",
+    "choices": [
+      "Adding their amplitudes",
+      "Building the joint state of the two-qubit system",
+      "Measuring them",
+      "Resetting them"
+    ],
+    "answer": 1,
+    "explanation": "|psi> tensor |phi> is the state of the combined system.",
+    "difficulty": 1
+  },
+  {
+    "id": "s09-q03",
+    "section": 9,
+    "type": "truefalse",
+    "question": "The order of the qubits matters: |0> tensor |1> is not the same state as |1> tensor |0>.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "The two live in different basis states of the 2-qubit space.",
+    "difficulty": 1
+  },
+  {
+    "id": "s09-q04",
+    "section": 9,
+    "type": "single",
+    "question": "A CNOT with the first qubit as control and the second as target does what?",
+    "choices": [
+      "Flips the target if the control is |1>",
+      "Flips the control if the target is |1>",
+      "Swaps the two qubits",
+      "Measures both qubits"
+    ],
+    "answer": 0,
+    "explanation": "The control is untouched; the target is flipped only when the control is |1>.",
+    "difficulty": 1
+  },
+  {
+    "id": "s09-q05",
+    "section": 9,
+    "type": "multi",
+    "question": "Which two-qubit gates are entangling?",
+    "choices": [
+      "CNOT",
+      "CZ",
+      "Hadamard on one qubit",
+      "SWAP"
+    ],
+    "answer": [
+      0,
+      1,
+      3
+    ],
+    "explanation": "A SWAP can be built from three CNOTs, so it entangles too.  A single Hadamard on one qubit does not.",
+    "difficulty": 1
+  },
+  {
+    "id": "s09-q06",
+    "section": 9,
+    "type": "single",
+    "question": "How many classical bits does a 3-qubit register have in the usual measurement setup?",
+    "choices": [
+      "3",
+      "8",
+      "1",
+      "6"
+    ],
+    "answer": 0,
+    "explanation": "One classical bit per qubit: 3 qubits need 3 classical bits.",
+    "difficulty": 1
+  }
+]

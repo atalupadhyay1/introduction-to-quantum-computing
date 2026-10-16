@@ -1,0 +1,190 @@
+<h1 id="section-1-introduction">Section 1 — Introduction</h1>
+<blockquote>
+<p><strong>Course section</strong> 1 of 17 · <strong>Lab</strong> <a href="../labs/L01_quantum_vs_classical/lab.py"><code>L01</code></a> · <strong>Quiz</strong> 5 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Explain what a quantum computer is <em>for</em>, and what it is not for.</li>
+<li>Name the three ingredients of every quantum algorithm.</li>
+<li>Say which of the course's 17 sections you will need for each later topic.</li>
+<li>Run the first lab and read its auto-graded output.</li>
+</ul>
+<h2 id="the-one-sentence-version">The one-sentence version</h2>
+<p>A quantum computer is <strong>not</strong> a faster classical computer. It is a special
+purpose device that solves a small family of problems exponentially faster
+by exploiting superposition and entanglement — and everything else about
+computing still happens on the classical machine.</p>
+<h2 id="the-shape-of-the-course">The shape of the course</h2>
+<p>The course is deliberately <strong>maths first</strong>. Before a single gate is applied
+you spend three sections on the mathematics that quantum physics is written
+in:</p>
+<pre class="highlight"><code>  complex numbers  -&gt;  probability  -&gt;  linear algebra  -&gt;  boolean logic
+        \                 |                 |                 /
+         \                |                 |                /
+          +---------------+----------------+----------------+
+                                  |
+                    the language of quantum mechanics</code></pre>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Topic</th>
+<th>Lab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Introduction</td>
+<td>L01</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Quantum physics through photon polarization</td>
+<td>L02</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Math foundation: complex numbers, probability, linear algebra, logic</td>
+<td>L03–L06</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Quantum cryptography (BB84)</td>
+<td>L07</td>
+</tr>
+<tr>
+<td>5</td>
+<td>A math model for quantum physics</td>
+<td>L08</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Quantum physics of spin states</td>
+<td>L09</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Modeling spin states with math</td>
+<td>L10</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Reversible and irreversible transformations</td>
+<td>L11</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Multi-qubit systems</td>
+<td>L11</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Entanglement</td>
+<td>L11</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Superposition and entanglement simulators</td>
+<td>L12</td>
+</tr>
+<tr>
+<td>12</td>
+<td>The quantum computing model</td>
+<td>L13</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Quantum programming with Microsoft Q#</td>
+<td>L14</td>
+</tr>
+<tr>
+<td>14</td>
+<td>IBM Quantum Experience</td>
+<td>L15</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Quantum programming and algorithms with IBM Qiskit</td>
+<td>L15</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Machine learning foundation</td>
+<td>L16</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Quantum machine learning with Qiskit</td>
+<td>L17</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-three-ingredients-of-a-quantum-algorithm">The three ingredients of a quantum algorithm</h2>
+<ol>
+<li><strong>A state</strong> — the description of the system, in this course a vector of
+   amplitudes.</li>
+<li><strong>A transformation</strong> — a unitary matrix (a "gate") applied to that state.</li>
+<li><strong>A measurement</strong> — the irreversible step that turns amplitudes into
+   numbers you can read.</li>
+</ol>
+<p>Every lab in this repository follows the same shape, because every quantum
+program follows the same shape:</p>
+<pre class="highlight"><code class="language-python">state = initial_state()          # 1. state
+for gate in gates:                # 2. transformations
+    state = apply(gate, state)
+outcome = measure(state)          # 3. measurement</code></pre>
+<h2 id="what-a-quantum-computer-is-good-for">What a quantum computer is good for</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Speed-up</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Factoring integers (Shor)</td>
+<td>exponential</td>
+<td>period finding + QFT</td>
+</tr>
+<tr>
+<td>Simulating molecules and materials</td>
+<td>exponential</td>
+<td>the simulator <em>is</em> the physics</td>
+</tr>
+<tr>
+<td>Unstructured search (Grover)</td>
+<td>quadratic</td>
+<td>amplitude amplification</td>
+</tr>
+<tr>
+<td>Quantum simulation of many-body systems</td>
+<td>exponential</td>
+<td>same reason as above</td>
+</tr>
+</tbody>
+</table>
+<p>And what it is <strong>not</strong> good for: sorting, spreadsheet work, rendering video,
+or anything where a good classical algorithm already exists.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L01_quantum_vs_classical/lab.py</code></pre>
+<p>The lab contrasts a classical bit-flipping circuit with a quantum
+superposition, and shows you what "reading out" a superposition actually
+costs you. Every check is auto-graded, and the lab ends with a one-line
+summary.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you state the one-sentence difference between a quantum computer
+      and a classical computer?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you name the three stages of a quantum program?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know which two sections of the course are about machine
+      learning, and why the classical one comes first?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L01_quantum_vs_classical/lab.py</code> and seen it
+      pass?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 2 — <a href="02-photon-polarization.md">Quantum Physics Through Photon Polarization</a>.
+Light is the most familiar quantum system there is, and polarization is a
+two-state system you can reason about without any machinery at all.</p>

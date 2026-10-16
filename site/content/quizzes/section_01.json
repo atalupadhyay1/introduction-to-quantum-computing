@@ -1,0 +1,75 @@
+[
+  {
+    "id": "s01-q01",
+    "section": 1,
+    "type": "single",
+    "question": "What is the central promise of a quantum computer?",
+    "choices": [
+      "It runs every possible program at once",
+      "It computes some problems exponentially faster using superposition and entanglement",
+      "It stores more bits than a classical computer",
+      "It never makes mistakes"
+    ],
+    "answer": 1,
+    "explanation": "The speed-up comes from superposition and entanglement, not from parallelism or storage.",
+    "difficulty": 1
+  },
+  {
+    "id": "s01-q02",
+    "section": 1,
+    "type": "truefalse",
+    "question": "A quantum computer replaces the classical computer for everyday tasks.",
+    "choices": [],
+    "answer": "false",
+    "explanation": "Quantum computers are accelerators: they are meant to be used for the few problems where they win, and to be called from a classical program.",
+    "difficulty": 1
+  },
+  {
+    "id": "s01-q03",
+    "section": 1,
+    "type": "single",
+    "question": "Which of these is a problem where a quantum computer is NOT expected to help?",
+    "choices": [
+      "Factoring a large integer",
+      "Simulating a quantum system",
+      "Sorting a list of a million names",
+      "Searching an unstructured space"
+    ],
+    "answer": 2,
+    "explanation": "Sorting is an excellent classical algorithm; a quantum computer offers nothing here.",
+    "difficulty": 1
+  },
+  {
+    "id": "s01-q04",
+    "section": 1,
+    "type": "multi",
+    "question": "Which of the course's 17 sections deals with machine learning?",
+    "choices": [
+      "Section 16",
+      "Section 17",
+      "Section 4",
+      "Section 12"
+    ],
+    "answer": [
+      0,
+      1
+    ],
+    "explanation": "Sections 16 (classical ML foundation) and 17 (quantum ML with Qiskit).",
+    "difficulty": 1
+  },
+  {
+    "id": "s01-q05",
+    "section": 1,
+    "type": "single",
+    "question": "Which programming languages does the course use?",
+    "choices": [
+      "Python, Q# and Qiskit",
+      "Python and Java",
+      "C++ and Rust",
+      "MATLAB only"
+    ],
+    "answer": 0,
+    "explanation": "Microsoft Q# for the Q# section, and Python with Qiskit for the IBM sections.",
+    "difficulty": 1
+  }
+]
