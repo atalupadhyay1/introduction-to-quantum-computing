@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QC101 &mdash; Quantum Computing &amp; Intro to Quantum Machine Learning</title>
+<meta name="description" content="A complete, interactive study package for the QC101 course: 17 chapter guides, 17 runnable labs, 103 auto-graded quiz questions and live simulators.">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Toggle navigation">&#9776;</button>
+  <a class="brand" href="#/">
+    <span class="brand-mark">&#9673;</span>
+    <span class="brand-text">QC101 <em>Quantum Computing &amp; Intro to Quantum ML</em></span>
+  </a>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-progress" id="topProgress" title="Your overall progress">
+    <span class="bar"><span class="bar-fill" id="topBarFill"></span></span>
+    <span class="topbar-progress-text" id="topProgressText">0%</span>
+  </div>
+  <button class="icon-btn" id="themeBtn" aria-label="Toggle light and dark theme">&#9789;</button>
+</header>
+
+<div class="layout">
+
+  <nav class="sidebar" id="sidebar" aria-label="Course navigation">
+    <div class="nav-group">
+      <div class="nav-heading">Start here</div>
+      <a class="nav-link" href="#/welcome"><span class="nav-num">&#9733;</span> Welcome</a>
+      <a class="nav-link" href="#/playground"><span class="nav-num">&#9678;</span> Interactive playground</a>
+      <a class="nav-link" href="#/quiz"><span class="nav-num">&#10003;</span> Quiz</a>
+      <a class="nav-link" href="#/progress"><span class="nav-num">&#9632;</span> My progress</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-heading">The 17 course sections</div>
+      <div id="chapterNav"><!-- built by app.js --></div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-heading">Reference</div>
+      <div id="appendixNav"><!-- built by app.js --></div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-heading">Repository</div>
+      <a class="nav-link" href="../labs/L01_quantum_vs_classical/lab.py" target="_blank"><span class="nav-num">&#9679;</span> Run a lab</a>
+      <a class="nav-link" href="../docs/index.md" target="_blank"><span class="nav-num">&#9679;</span> Chapter sources</a>
+    </div>
+  </nav>
+
+  <main class="content" id="content" tabindex="-1">
+    <div class="loading">Loading&hellip;</div>
+  </main>
+
+</div>
+
+<footer class="footer">
+  <p>Built as a study companion for
+     <a href="https://www.udemy.com/course/qc101-introduction-to-quantum-computing-quantum-physics-for-beginners/" target="_blank" rel="noopener">QC101 &mdash; Introduction to Quantum Computing / Quantum Physics for Beginners</a>
+     by Kumaresan Ramanathan. Every number here was produced by running the code in this repository.</p>
+</footer>
+
+<script src="vendor/katex/katex.min.js" defer></script>
+<script src="vendor/katex/contrib/auto-render.min.js" defer></script>
+<script src="assets/widgets.js" defer></script>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

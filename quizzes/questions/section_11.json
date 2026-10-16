@@ -1,0 +1,76 @@
+[
+  {
+    "id": "s11-q01",
+    "section": 11,
+    "type": "single",
+    "question": "What does the entangled-photon simulator keep track of?",
+    "choices": [
+      "A single photon's angle",
+      "The four joint probabilities (00, 01, 10, 11)",
+      "The polarization of one photon only",
+      "A classical wave"
+    ],
+    "answer": 1,
+    "explanation": "The simulator evolves the state (p00, p01, p10, p11) of the pair.",
+    "difficulty": 1
+  },
+  {
+    "id": "s11-q02",
+    "section": 11,
+    "type": "truefalse",
+    "question": "In the entangled simulator, measuring the two photons in the same basis always gives matching or anti-matching outcomes, never mismatched ones.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "That perfect correlation is the signature of the entangled state.",
+    "difficulty": 1
+  },
+  {
+    "id": "s11-q03",
+    "section": 11,
+    "type": "single",
+    "question": "If the two photons of an entangled pair are measured in *different* bases, the outcomes are...",
+    "choices": [
+      "perfectly correlated",
+      "uncorrelated -- each is random",
+      "always both zero",
+      "always both one"
+    ],
+    "answer": 1,
+    "explanation": "Different bases break the correlation -- which is exactly what makes the pair useless for communication.",
+    "difficulty": 1
+  },
+  {
+    "id": "s11-q04",
+    "section": 11,
+    "type": "multi",
+    "question": "Which of these does the course's simulator demonstrate?",
+    "choices": [
+      "Malus's law for a single photon",
+      "Collapse after measurement",
+      "The no-cloning theorem",
+      "The CHSH inequality"
+    ],
+    "answer": [
+      0,
+      1,
+      3
+    ],
+    "explanation": "No-cloning is discussed but the simulators demonstrate the rest.",
+    "difficulty": 1
+  },
+  {
+    "id": "s11-q05",
+    "section": 11,
+    "type": "single",
+    "question": "How does the course's cross-check confirm that the photon simulator and the qubit model agree?",
+    "choices": [
+      "They produce the same probability tables",
+      "They run the same code",
+      "They use the same random numbers",
+      "They do not cross-check"
+    ],
+    "answer": 0,
+    "explanation": "The two independent models are compared numerically and must match.",
+    "difficulty": 1
+  }
+]

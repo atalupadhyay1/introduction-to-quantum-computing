@@ -1,0 +1,92 @@
+[
+  {
+    "id": "s06-q01",
+    "section": 6,
+    "type": "single",
+    "question": "What physical system is the qubit of this course built from?",
+    "choices": [
+      "A photon's polarization",
+      "An electron's spin",
+      "A charged particle in a box",
+      "A superconducting flux"
+    ],
+    "answer": 1,
+    "explanation": "The course models spin-1/2 particles: two states, up and down, with the same mathematical structure as photon polarization.",
+    "difficulty": 1
+  },
+  {
+    "id": "s06-q02",
+    "section": 6,
+    "type": "single",
+    "question": "How many states does a qubit have?",
+    "choices": [
+      "One",
+      "Two",
+      "Infinitely many",
+      "Three"
+    ],
+    "answer": 1,
+    "explanation": "Two basis states, |0> and |1>, but a continuum of superpositions of them.",
+    "difficulty": 1
+  },
+  {
+    "id": "s06-q03",
+    "section": 6,
+    "type": "truefalse",
+    "question": "A qubit in the state |0> can also be in the state (|0> + |1>)/sqrt(2) if you rotate it first.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "Rotations move a qubit around the Bloch sphere; every pure state is reachable from |0>.",
+    "difficulty": 1
+  },
+  {
+    "id": "s06-q04",
+    "section": 6,
+    "type": "single",
+    "question": "What does 'spin up' correspond to in the two-state system?",
+    "choices": [
+      "|0>",
+      "|1>",
+      "|+>",
+      "the Bloch sphere"
+    ],
+    "answer": 0,
+    "explanation": "By convention spin up is |0> and spin down is |1>.",
+    "difficulty": 1
+  },
+  {
+    "id": "s06-q05",
+    "section": 6,
+    "type": "multi",
+    "question": "Which experiments are done with spin states in the course?",
+    "choices": [
+      "Stern-Gerlach",
+      "Double-slit",
+      "Mach-Zehnder",
+      "Bell tests"
+    ],
+    "answer": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "explanation": "The course walks through the Stern-Gerlach experiment, the double-slit and the Mach-Zehnder interferometer, and then the Bell experiments.",
+    "difficulty": 1
+  },
+  {
+    "id": "s06-q06",
+    "section": 6,
+    "type": "single",
+    "question": "Why is the spin-1/2 system a good model for a qubit?",
+    "choices": [
+      "Because it has exactly two measurable components",
+      "Because spin is a classical quantity",
+      "Because spin can be measured without disturbing it",
+      "Because spin states are continuous"
+    ],
+    "answer": 0,
+    "explanation": "Two measurable components with the right algebraic structure is all a qubit needs.",
+    "difficulty": 1
+  }
+]

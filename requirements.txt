@@ -1,0 +1,30 @@
+# QC101 study companion — Python dependencies
+#
+#   python3 -m venv .venv
+#   source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# The core labs (L01-L14) and the shared library need NOTHING beyond the
+# Python standard library.  Everything below is for the Qiskit labs
+# (L15/L17), the site build, the notebooks and the optional extras.
+
+# --- Quantum stack -------------------------------------------------------
+qiskit>=1.2,<3
+qiskit-aer>=0.15
+qiskit-machine-learning>=0.8
+
+# --- Classical ML (used by L16/L17) --------------------------------------
+scikit-learn>=1.4
+numpy>=1.26
+scipy>=1.11
+
+# --- Site build (markdown -> HTML) ---------------------------------------
+Markdown>=3.5
+pymdown-extensions>=10.0
+
+# --- Optional extras -----------------------------------------------------
+# Install these only if you want to run the notebooks or draw figures:
+#
+#   matplotlib>=3.8      # static plots
+#   pandas>=2.2          # tabular datasets in the notebooks
+#   jupyterlab>=4.2      # to run notebooks/*.ipynb

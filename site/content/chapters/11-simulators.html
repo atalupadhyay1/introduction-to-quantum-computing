@@ -1,0 +1,110 @@
+<h1 id="section-11-superposition-and-entanglement-with-quantum-simulators">Section 11 — Superposition and Entanglement with Quantum Simulators</h1>
+<blockquote>
+<p><strong>Course section</strong> 11 of 17 · <strong>Lab</strong> <a href="../labs/L12_simulators/lab.py"><code>L12</code></a> · <strong>Quiz</strong> 5 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Run a classical photon simulator and a quantum one side by side.</li>
+<li>Explain the difference between the two on the same experiment.</li>
+<li>Simulate a pair of entangled photons and predict the joint statistics.</li>
+<li>Cross-check an independent simulator against the qubit model.</li>
+</ul>
+<h2 id="the-course-ships-three-java-simulators">The course ships three Java simulators</h2>
+<p>The course's "Download the Simulator Code" article points at a ZIP with
+three programs:</p>
+<table>
+<thead>
+<tr>
+<th>Program</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ClassicalPhoton</code></td>
+<td>a classical wave through polarizers, with intensity arithmetic</td>
+</tr>
+<tr>
+<td><code>PhotonPolarizationMeasurement</code></td>
+<td>a single photon, with random outcomes</td>
+</tr>
+<tr>
+<td><code>EntangledPhotonMeasurement</code></td>
+<td>a pair of entangled photons, joint statistics</td>
+</tr>
+</tbody>
+</table>
+<p>They are written in Java. This repository ships <strong>Python ports</strong> in lab
+L12, so you can run them without a JVM, and then cross-check them against
+the qubit model built earlier in the course.</p>
+<h2 id="the-classical-photon">The classical photon</h2>
+<p>The classical simulator keeps the <em>intensity</em> in each polarization
+direction. Malus's law is applied as</p>
+<div class="arithmatex">\[
+P_{\text{align}} = \cos^2(\theta_f - \theta_p)
+\]</div>
+<p>and the "aligned" state sets <span class="arithmatex">\(\theta_p \leftarrow \theta_f\)</span>, while the
+"anti-aligned" state sets <span class="arithmatex">\(\theta_p \leftarrow \theta_f + 90°\)</span>.</p>
+<h2 id="the-quantum-photon">The quantum photon</h2>
+<p>The quantum simulator picks a <em>single</em> outcome at random, with probabilities
+given by the squared overlaps. The difference is visible in the cascade:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>classical</th>
+<th>quantum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conditional probability of each stage</td>
+<td><span class="arithmatex">\([0.5, 1.0, 0.5]\)</span></td>
+<td><span class="arithmatex">\([0.5, 1.0, 0.5]\)</span></td>
+</tr>
+<tr>
+<td>cumulative probability</td>
+<td><span class="arithmatex">\([0.5, 0.5, 0.25]\)</span></td>
+<td><span class="arithmatex">\([0.5, 0.5, 0.25]\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The <em>numbers</em> agree — Malus's law is Malus's law. What differs is the
+mechanism: the classical simulator splits the intensity and the quantum one
+collapses.</p>
+<h2 id="the-entangled-pair">The entangled pair</h2>
+<p>The entangled simulator keeps the four joint probabilities
+<span class="arithmatex">\((p_{00}, p_{01}, p_{10}, p_{11})\)</span>. After a local rotation of the basis by
+<span class="arithmatex">\(\theta\)</span> the outcome probability is the squared inner product with the
+rotated basis state.</p>
+<p>The prediction is the one you already know:</p>
+<ul>
+<li>measured in the <strong>same</strong> basis: only <span class="arithmatex">\(00\)</span> and <span class="arithmatex">\(11\)</span> occur, each with
+  probability <span class="arithmatex">\(\tfrac12\)</span>;</li>
+<li>measured in <strong>different</strong> bases: the four outcomes each occur with
+  probability <span class="arithmatex">\(\tfrac14\)</span> — the correlation is gone.</li>
+</ul>
+<p>The second line is the security of quantum key distribution in one
+sentence: a useful correlation needs a common basis, and the basis is what
+an eavesdropper has to guess.</p>
+<h2 id="cross-checking-the-models">Cross-checking the models</h2>
+<p>Lab L12 runs the qubit model and the photon simulator on the <em>same</em>
+experiment and compares the numbers. This is the most valuable habit in the
+course: two independently written models agreeing is real evidence, where
+one model agreeing with itself is not.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L12_simulators/lab.py</code></pre>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you state the difference between the classical and the quantum
+      photon simulator in one sentence?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you predict the joint outcomes of an entangled pair measured in
+      two different bases?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know why measuring in different bases destroys the
+      correlation?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L12_simulators/lab.py</code> and seen the two
+      models agree?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 12 — <a href="12-quantum-computing-model.md">The Quantum Computing Model</a>.
+Now put the physics into a programming model.</p>

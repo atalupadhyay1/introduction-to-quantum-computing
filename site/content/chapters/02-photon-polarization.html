@@ -1,0 +1,121 @@
+<h1 id="section-2-quantum-physics-through-photon-polarization">Section 2 — Quantum Physics Through Photon Polarization</h1>
+<blockquote>
+<p><strong>Course section</strong> 2 of 17 · <strong>Lab</strong> <a href="../labs/L02_photon_polarization/lab.py"><code>L02</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>State Malus's law and use it.</li>
+<li>Explain why polarization behaves like a <em>two-state</em> system.</li>
+<li>Distinguish a classical wave superposition from a quantum one.</li>
+<li>Run a polarization cascade in code and predict the outcome before running it.</li>
+</ul>
+<h2 id="photons-are-the-friendliest-quantum-system">Photons are the friendliest quantum system</h2>
+<p>A photon of light travelling in a fixed direction has exactly <strong>two</strong>
+independent polarization states:</p>
+<ul>
+<li><strong>horizontal</strong> (H)</li>
+<li><strong>vertical</strong> (V)</li>
+</ul>
+<p>That is all you need. A photon is the qubit of this section, with
+<span class="arithmatex">\(|0\rangle \equiv \mathrm{H}\)</span> and <span class="arithmatex">\(|1\rangle \equiv \mathrm{V}\)</span>.</p>
+<h2 id="maluss-law">Malus's law</h2>
+<p>Send a photon polarized at angle <span class="arithmatex">\(\theta_p\)</span> into a polarizer whose
+transmission axis is at angle <span class="arithmatex">\(\theta_f\)</span>. The probability it passes is</p>
+<div class="arithmatex">\[
+P(\text{pass}) = \cos^2(\theta_p - \theta_f)
+\]</div>
+<p>and the probability it is absorbed is</p>
+<div class="arithmatex">\[
+P(\text{block}) = \sin^2(\theta_p - \theta_f)
+\]</div>
+<p>Two special cases are worth memorising:</p>
+<table>
+<thead>
+<tr>
+<th>Setup</th>
+<th><span class="arithmatex">\(P(\text{pass})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same angle (<span class="arithmatex">\(\theta_p = \theta_f\)</span>)</td>
+<td><span class="arithmatex">\(1\)</span></td>
+</tr>
+<tr>
+<td>90° apart</td>
+<td><span class="arithmatex">\(0\)</span></td>
+</tr>
+<tr>
+<td>45° apart</td>
+<td><span class="arithmatex">\(\tfrac12\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Worked example: a photon at <span class="arithmatex">\(0^\circ\)</span> through a polarizer at <span class="arithmatex">\(60^\circ\)</span> gives
+<span class="arithmatex">\(P(\text{pass}) = \cos^2 60^\circ = 0.25\)</span>.</p>
+<h2 id="superposition-and-the-part-that-is-genuinely-quantum">Superposition, and the part that is genuinely quantum</h2>
+<p>A polarizer at <span class="arithmatex">\(45^\circ\)</span> transmits a photon that is in the state</p>
+<div class="arithmatex">\[
+|+\rangle = \frac{1}{\sqrt 2}\bigl(|0\rangle + |1\rangle\bigr)
+\]</div>
+<p>and a polarizer at <span class="arithmatex">\(-45^\circ\)</span> transmits</p>
+<div class="arithmatex">\[
+|-\rangle = \frac{1}{\sqrt 2}\bigl(|0\rangle - |1\rangle\bigr)
+\]</div>
+<p>A <strong>classical</strong> wave can also be split between two directions, and the
+interference pattern is the same. The difference appears when you <em>measure</em>
+the polarization:</p>
+<ul>
+<li>a classical wave keeps both components and shows them in the intensity;</li>
+<li>a quantum photon is found in <strong>one</strong> definite polarization, chosen at
+  random, with probabilities <span class="arithmatex">\(|\alpha|^2\)</span> and <span class="arithmatex">\(|\beta|^2\)</span>.</li>
+</ul>
+<p>That irreversible, probabilistic collapse is what makes it quantum, and it is
+exactly the Born rule you will formalise in section 5.</p>
+<h2 id="the-cascade">The cascade</h2>
+<p>Three polarizers in a row is the classic demonstration. With
+<span class="arithmatex">\(0^\circ \rightarrow 45^\circ \rightarrow 90^\circ\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Conditional probability of passing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0° (input already 0°)</td>
+<td><span class="arithmatex">\(1\)</span></td>
+</tr>
+<tr>
+<td>45°</td>
+<td><span class="arithmatex">\(\cos^2 45^\circ = 0.5\)</span></td>
+</tr>
+<tr>
+<td>90°</td>
+<td><span class="arithmatex">\(\cos^2 45^\circ = 0.5\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Total probability of emerging: <span class="arithmatex">\(0.5 \times 0.5 = 0.25\)</span>. But remove the middle
+polarizer and the probability is <strong>zero</strong> — the <span class="arithmatex">\(45^\circ\)</span> polarizer is what
+<em>created</em> the superposition that the <span class="arithmatex">\(90^\circ\)</span> polarizer then destroyed.
+This is interference, and it is the same phenomenon that underlies every
+quantum algorithm.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L02_photon_polarization/lab.py</code></pre>
+<p>The lab implements the polarizer as a matrix, runs the cascade, and checks
+that the <em>conditional</em> probabilities are <span class="arithmatex">\([0.5, 1.0, 0.5]\)</span> while the
+<em>cumulative</em> ones are <span class="arithmatex">\([0.5, 0.5, 0.25]\)</span>.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you compute <span class="arithmatex">\(P(\text{pass})\)</span> for any pair of angles?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain why a classical wave and a quantum photon differ even
+      though both can be "in two directions at once"?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know why the three-polarizer cascade lets 25% of the light
+      through, but removing the middle polarizer lets 0% through?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L02_photon_polarization/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 3 — <a href="03-math-foundation.md">Math Foundation</a>. Photon polarization
+gave you the intuition; the next section gives you the formal toolkit.</p>

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "s17-q01",
+    "section": 17,
+    "type": "single",
+    "question": "In the course's quantum KNN, what replaces the classical distance?",
+    "choices": [
+      "A quantum random number",
+      "Interference between amplitude-encoded states",
+      "A faster CPU",
+      "A different loss function"
+    ],
+    "answer": 1,
+    "explanation": "The overlap of the encoded states is computed by interference, and it equals the classical similarity.",
+    "difficulty": 1
+  },
+  {
+    "id": "s17-q02",
+    "section": 17,
+    "type": "truefalse",
+    "question": "The quantum KNN and the classical KNN of the course produce the same class probabilities.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "The algebra shows sum_i (v_i + q_i)^2 = 4 w_i, so the measurement statistics reproduce the classical weights exactly.",
+    "difficulty": 1
+  },
+  {
+    "id": "s17-q03",
+    "section": 17,
+    "type": "single",
+    "question": "What is a quantum kernel?",
+    "choices": [
+      "K(x, z) = |<phi(x)|phi(z)>|^2, with phi a quantum feature map",
+      "A quantum computer that sorts data",
+      "A rule for choosing a learning rate",
+      "A quantum Fourier transform"
+    ],
+    "answer": 0,
+    "explanation": "The quantum kernel replaces the classical inner product with a quantum overlap.",
+    "difficulty": 1
+  },
+  {
+    "id": "s17-q04",
+    "section": 17,
+    "type": "single",
+    "question": "Which feature map does the course's qsvm.py use?",
+    "choices": [
+      "ZZFeatureMap with 4 features and 2 repetitions",
+      "AngleEmbedding with 1 feature",
+      "HellingerEmbedding",
+      "A Fourier transform of the raw data"
+    ],
+    "answer": 0,
+    "explanation": "ZZFeatureMap(feature_dimension=4, reps=2, entanglement='linear').",
+    "difficulty": 1
+  },
+  {
+    "id": "s17-q05",
+    "section": 17,
+    "type": "multi",
+    "question": "Which parts of a machine-learning pipeline stay classical in quantum ML?",
+    "choices": [
+      "The loss function",
+      "The optimizer",
+      "The data preprocessing",
+      "The quantum feature map"
+    ],
+    "answer": [
+      0,
+      1,
+      2
+    ],
+    "explanation": "Only the feature map (and the kernel it induces) is quantum.",
+    "difficulty": 1
+  },
+  {
+    "id": "s17-q06",
+    "section": 17,
+    "type": "single",
+    "question": "What does the 'significance of quantum machine learning' really amount to?",
+    "choices": [
+      "Quantum computers will learn every model better",
+      "It is mainly a new way to compute a similarity or kernel",
+      "It removes the need for a train/test split",
+      "It makes the loss function unnecessary"
+    ],
+    "answer": 1,
+    "explanation": "The honest summary: quantum ML is a new way to compute a kernel, useful where that kernel is hard to compute classically.",
+    "difficulty": 1
+  },
+  {
+    "id": "s17-q07",
+    "section": 17,
+    "type": "single",
+    "question": "In the quantum KNN circuit, what does the Hadamard gate on the 'training vs query' qubit do?",
+    "choices": [
+      "It measures the qubits",
+      "It creates the interference between the training half and the query half",
+      "It resets the qubits",
+      "It entangles the two classes"
+    ],
+    "answer": 1,
+    "explanation": "The Hadamard turns the sum and the difference of the amplitudes into the measurement statistics.",
+    "difficulty": 1
+  }
+]

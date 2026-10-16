@@ -1,0 +1,200 @@
+<h1 id="section-3-math-foundation">Section 3 — Math Foundation</h1>
+<blockquote>
+<p><strong>Course section</strong> 3 of 17 · <strong>Labs</strong> <a href="../labs/L03_boolean_logic/lab.py"><code>L03</code></a> <a href="../labs/L04_probability_statistics/lab.py"><code>L04</code></a> <a href="../labs/L05_complex_numbers/lab.py"><code>L05</code></a> <a href="../labs/L06_linear_algebra/lab.py"><code>L06</code></a> · <strong>Quiz</strong> 7 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Manipulate complex numbers: add, multiply, divide, conjugate, modulus.</li>
+<li>Apply the rules of probability: addition, multiplication, conditional
+  probability, independence.</li>
+<li>Read and write Boolean logic, and convert between truth tables,
+  expressions and logic gates.</li>
+<li>Do the linear algebra quantum computing actually needs: matrix-vector
+  products, adjoints, inverses, eigenvalues, and the Kronecker product.</li>
+</ul>
+<h2 id="why-this-section-exists">Why this section exists</h2>
+<p>The course's own "Course Article" on <em>Quantum Computing Through Math</em> says
+it plainly: a quantum circuit is a complex matrix acting on a complex
+vector, and the result is a probability distribution. You cannot read a
+quantum program without this mathematics.</p>
+<h2 id="complex-numbers">Complex numbers</h2>
+<p><span class="arithmatex">\(i\)</span> is the square root of <span class="arithmatex">\(-1\)</span>, so <span class="arithmatex">\(i^2 = -1\)</span>. Every complex number is
+<span class="arithmatex">\(z = a + bi\)</span> with <span class="arithmatex">\(a, b \in \mathbb{R}\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conjugate</td>
+<td><span class="arithmatex">\(\bar z = a - bi\)</span></td>
+</tr>
+<tr>
+<td>Modulus</td>
+<td><span class="arithmatex">\(\lvert z\rvert = \sqrt{a^2 + b^2}\)</span></td>
+</tr>
+<tr>
+<td>Modulus squared</td>
+<td><span class="arithmatex">\(\lvert z\rvert^2 = z \bar z = a^2 + b^2\)</span></td>
+</tr>
+<tr>
+<td>Polar form</td>
+<td><span class="arithmatex">\(z = r e^{i\theta}\)</span>, <span class="arithmatex">\(r = \lvert z\rvert\)</span></td>
+</tr>
+<tr>
+<td>Division</td>
+<td><span class="arithmatex">\(\dfrac{a+bi}{c+di} = \dfrac{(a+bi)(c-di)}{c^2 + d^2}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Worked example:</p>
+<div class="arithmatex">\[
+\frac{3 + 4i}{7 - 6i} = \frac{(3+4i)(7+6i)}{49 + 36}
+= \frac{21 + 18i + 28i + 24i^2}{85}
+= \frac{-3 + 46i}{85}
+\]</div>
+<p>so <span class="arithmatex">\(\operatorname{Re} = -3/85 \approx -0.0353\)</span> and <span class="arithmatex">\(\operatorname{Im} =
+46/85 \approx 0.5412\)</span>.</p>
+<blockquote>
+<p><strong>Python trap.</strong> <code>(3+4j)/(7-6j).real</code> parses as
+<code>(3+4j)/((7-6j).real)</code> — a float divided by a complex. Always write
+<code>((3+4j)/(7-6j)).real</code>.</p>
+</blockquote>
+<h2 id="probability">Probability</h2>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Addition</td>
+<td><span class="arithmatex">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span></td>
+</tr>
+<tr>
+<td>Multiplication (independent)</td>
+<td><span class="arithmatex">\(P(A \cap B) = P(A) P(B)\)</span></td>
+</tr>
+<tr>
+<td>Conditional</td>
+<td><span class="arithmatex">\(P(A \mid B) = P(A \cap B) / P(B)\)</span></td>
+</tr>
+<tr>
+<td>Complement</td>
+<td><span class="arithmatex">\(P(A^c) = 1 - P(A)\)</span></td>
+</tr>
+<tr>
+<td>Mutually exclusive</td>
+<td><span class="arithmatex">\(P(A \cap B) = 0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Expectation and variance of a discrete random variable:</p>
+<div class="arithmatex">\[
+\mu = \sum_i x_i p_i, \qquad
+\sigma^2 = \sum_i (x_i - \mu)^2 p_i
+\]</div>
+<p>and the covariance of two variables is <span class="arithmatex">\(\operatorname{Cov}(X,Y) =
+E[XY] - \mu_X \mu_Y\)</span>. The correlation coefficient divides that by
+<span class="arithmatex">\(\sigma_X \sigma_Y\)</span>.</p>
+<h2 id="boolean-logic">Boolean logic</h2>
+<p>AND, OR and NOT are the three classical gates; NAND and NOR are universal,
+and XOR is the one quantum computing cares about most (it is the
+self-inverse "controlled NOT" when you attach a control).</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(a\)</span></th>
+<th><span class="arithmatex">\(b\)</span></th>
+<th>AND</th>
+<th>OR</th>
+<th>XOR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>De Morgan's laws, which you will use constantly when reasoning about
+circuits:</p>
+<div class="arithmatex">\[
+\overline{A \land B} = \bar A \lor \bar B, \qquad
+\overline{A \lor B} = \bar A \land \bar B
+\]</div>
+<h2 id="linear-algebra">Linear algebra</h2>
+<p>This is the part that matters most. A qubit state is a column vector of
+complex amplitudes; a gate is a matrix.</p>
+<p><strong>Matrix-vector product</strong> is row-by-column:</p>
+<div class="arithmatex">\[
+(A v)_i = \sum_j A_{ij} v_j
+\]</div>
+<p><strong>Adjoint (conjugate transpose)</strong> <span class="arithmatex">\(A^\dagger = (A^*)^T\)</span>:</p>
+<ul>
+<li><span class="arithmatex">\(A\)</span> is <strong>unitary</strong> if <span class="arithmatex">\(A^\dagger A = I\)</span> — this is what makes a gate
+  reversible;</li>
+<li><span class="arithmatex">\(A\)</span> is <strong>Hermitian</strong> if <span class="arithmatex">\(A^\dagger = A\)</span> — this is what makes an
+  observable have real eigenvalues.</li>
+</ul>
+<p><strong>Eigenvalues.</strong> If <span class="arithmatex">\(A v = \lambda v\)</span> then <span class="arithmatex">\(v\)</span> is an eigenvector and
+<span class="arithmatex">\(\lambda\)</span> an eigenvalue. The course's "Computing Eigen Values" article
+describes the trick: multiply a matrix by an eigenvector, factor out the
+eigenvalue, and the remaining equation is the eigenvector's own system.</p>
+<p><strong>The Kronecker product</strong> builds multi-qubit states. If <span class="arithmatex">\(A\)</span> is <span class="arithmatex">\(m\times m\)</span>
+and <span class="arithmatex">\(B\)</span> is <span class="arithmatex">\(n\times n\)</span> then <span class="arithmatex">\(A \otimes B\)</span> is <span class="arithmatex">\(mn \times mn\)</span> and its index
+runs as <span class="arithmatex">\(i\cdot n + k\)</span>:</p>
+<div class="arithmatex">\[
+|0\rangle \otimes |1\rangle =
+\begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix}
+\]</div>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L03_boolean_logic/lab.py
+python labs/L04_probability_statistics/lab.py
+python labs/L05_complex_numbers/lab.py
+python labs/L06_linear_algebra/lab.py</code></pre>
+<p>Lab L06 is the biggest of the four (47 checks) and covers everything from
+matrix multiplication to the power method for finding dominant eigenvalues.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you divide two complex numbers and simplify the result by hand?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know when <span class="arithmatex">\(P(A \cap B) = P(A)P(B)\)</span> is valid, and what to do
+      when it is not?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you write the truth table for XOR and explain why it is
+      self-inverse?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you compute <span class="arithmatex">\(A^\dagger\)</span> for a 2×2 complex matrix?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know what "unitary" guarantees and why it matters?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 4 — <a href="04-quantum-cryptography.md">Quantum Cryptography</a>. The
+mathematics is in place; now use it to do something practical.</p>

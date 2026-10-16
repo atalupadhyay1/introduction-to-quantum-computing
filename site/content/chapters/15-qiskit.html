@@ -1,0 +1,154 @@
+<h1 id="section-15-quantum-programming-and-algorithms-with-ibm-qiskit">Section 15 — Quantum Programming and Algorithms with IBM Qiskit</h1>
+<blockquote>
+<p><strong>Course section</strong> 15 of 17 · <strong>Lab</strong> <a href="../labs/L15_qiskit/lab.py"><code>L15</code></a> · <strong>Quiz</strong> 7 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Build, transpile, run and read results from a Qiskit circuit.</li>
+<li>Use the modern 2.x APIs: <code>AerSimulator</code>, <code>Statevector</code>, <code>Operator</code>,
+  <code>assign_parameters</code>.</li>
+<li>Implement BB84 in Qiskit with a quantum random number generator.</li>
+<li>Implement Shor's period finding with a real quantum circuit and recover
+  the period from the measurement statistics.</li>
+</ul>
+<h2 id="the-api-has-moved">The API has moved</h2>
+<p>The course was recorded against Qiskit 0.x. Qiskit 1.0 removed a great
+deal, and Qiskit 2.x removed more. This is why the course ships a
+"Shor's Algorithm — Temporary Fix" article: the code stopped running.</p>
+<table>
+<thead>
+<tr>
+<th>Old (removed)</th>
+<th>Modern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BasicAer.get_backend("qasm_simulator")</code></td>
+<td><code>qiskit_aer.AerSimulator()</code></td>
+</tr>
+<tr>
+<td><code>QuantumInstance(backend, shots=...)</code></td>
+<td><code>qiskit_ibm_runtime</code> primitives, or a plain <code>backend.run(..., shots=...)</code></td>
+</tr>
+<tr>
+<td><code>circuit.bind_parameters({...})</code></td>
+<td><code>circuit.assign_parameters({...})</code></td>
+</tr>
+<tr>
+<td><code>qiskit.algorithms.Shor</code></td>
+<td>build the circuit yourself</td>
+</tr>
+<tr>
+<td><code>qiskit.utils.algorithm_globals</code></td>
+<td><code>numpy.random.default_rng(seed)</code></td>
+</tr>
+<tr>
+<td><code>circuit.save_statevector()</code></td>
+<td><code>qiskit.quantum_info.Statevector(circuit)</code></td>
+</tr>
+<tr>
+<td><code>qiskit.algorithms.phase_estimation</code></td>
+<td><code>qiskit.synthesis</code> / your own circuit</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-courses-five-circuits">The course's five circuits</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>circuit1.py</code></td>
+<td>a three-qubit GHZ state with <code>measure_all</code></td>
+</tr>
+<tr>
+<td><code>circuit2.py</code></td>
+<td>building the circuit programmatically with <code>CXGate().append</code></td>
+</tr>
+<tr>
+<td><code>circuit3.py</code></td>
+<td><code>Parameter</code> objects, <code>assign_parameters</code>, and <code>initialize</code></td>
+</tr>
+<tr>
+<td><code>circuit4.py</code></td>
+<td>a custom gate built from a circuit with <code>to_gate()</code></td>
+</tr>
+<tr>
+<td><code>circuit5.py</code></td>
+<td>a custom <em>instruction</em> with <code>to_instruction()</code></td>
+</tr>
+<tr>
+<td><code>compute_matrix.py</code></td>
+<td>the unitary of a circuit, via <code>Operator</code></td>
+</tr>
+<tr>
+<td><code>simulate_circuit.py</code></td>
+<td>running with 1000 shots</td>
+</tr>
+</tbody>
+</table>
+<p>The difference between <code>to_gate()</code> and <code>to_instruction()</code> matters: a
+<strong>gate</strong> is reversible and can be controlled; an <strong>instruction</strong> is not, and
+<code>decompose()</code> expands it back into its parts.</p>
+<h2 id="bb84-in-qiskit">BB84 in Qiskit</h2>
+<p>The course's <code>bb84.py</code> uses a quantum random number generator for every
+random choice — the bit and the basis:</p>
+<pre class="highlight"><code class="language-python">circuit = QuantumCircuit(1, 1)
+circuit.x(0)          # if the bit is 1
+circuit.barrier()
+circuit.h(0)          # if the basis is diagonal
+circuit.barrier()
+circuit.measure(0, 0)</code></pre>
+<p>The <code>barrier()</code> calls are cosmetic but instructive: they stop the
+optimiser from merging the gates across the random choice, which would
+change the physics.</p>
+<h2 id="shors-algorithm">Shor's algorithm</h2>
+<p>Shor's algorithm reduces factoring to finding the <strong>period</strong> <span class="arithmatex">\(r\)</span> of</p>
+<div class="arithmatex">\[
+f(x) = a^x \bmod N
+\]</div>
+<p>for a random <span class="arithmatex">\(a\)</span> coprime to <span class="arithmatex">\(N\)</span>. The classical part of the reduction is
+easy; the hard part — computing a discrete logarithm — is where the
+quantum part enters.</p>
+<p>The quantum circuit is Kitaev's order-finding circuit:</p>
+<ol>
+<li>the counting register (<span class="arithmatex">\(m\)</span> qubits) goes into a uniform superposition;</li>
+<li>the target register is prepared in <span class="arithmatex">\(\lvert1\rangle\)</span>;</li>
+<li>for each counting qubit <span class="arithmatex">\(i\)</span>, apply a <strong>controlled</strong> <span class="arithmatex">\(U^{2^i}\)</span>, where
+   <span class="arithmatex">\(U\lvert y\rangle = a \cdot y \bmod N\)</span>;</li>
+<li>apply the <strong>inverse QFT</strong> to the counting register;</li>
+<li>measure the counting register.</li>
+</ol>
+<p>The measurement lands on multiples of <span class="arithmatex">\(2^m / r\)</span>, so <span class="arithmatex">\(r\)</span> falls out of the
+<em>distribution</em>, recovered by a continued-fraction expansion of
+<span class="arithmatex">\(y/2^m\)</span>.</p>
+<p>The lab implements exactly this with <span class="arithmatex">\(N = 15\)</span>, <span class="arithmatex">\(a = 2\)</span>, <span class="arithmatex">\(m = 4\)</span>. The
+classical period is 4, and the quantum run gives peaks at
+<span class="arithmatex">\(0, 4, 8, 12\)</span> — the multiples of <span class="arithmatex">\(16/4 = 4\)</span> — and recovers <span class="arithmatex">\(r = 4\)</span>. Then</p>
+<div class="arithmatex">\[
+\gcd\bigl(2^{4/2} - 1, 15\bigr) = \gcd(3, 15) = 3
+\]</div>
+<p>and 3 is a factor of 15.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L15_qiskit/lab.py</code></pre>
+<p>The lab runs the five course circuits, compiles a circuit to a matrix, runs
+BB84 with a QRNG (batched so that 400 rounds need only ~18 simulator
+calls), and runs the period finder.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you name the modern replacement for each of <code>BasicAer</code>,
+      <code>bind_parameters</code> and <code>qiskit.algorithms.Shor</code>?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know the difference between <code>to_gate()</code> and <code>to_instruction()</code>?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain why the period-finding measurement peaks at multiples
+      of <span class="arithmatex">\(2^m/r\)</span>?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L15_qiskit/lab.py</code> and seen the period
+      recovered?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 16 — <a href="16-ml-foundation.md">Machine Learning Foundation</a>. Before
+quantum machine learning, the classical machine learning it replaces.</p>

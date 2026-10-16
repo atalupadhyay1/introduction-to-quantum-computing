@@ -1,0 +1,106 @@
+[
+  {
+    "id": "s04-q01",
+    "section": 4,
+    "type": "single",
+    "question": "In BB84, how many bases are there and what are they called?",
+    "choices": [
+      "Two: rectilinear and diagonal",
+      "Three: H, V and D",
+      "One: only vertical",
+      "Four: 0, 45, 90 and 135 degrees"
+    ],
+    "answer": 0,
+    "explanation": "BB84 uses two bases: rectilinear (0/90) and diagonal (45/135).",
+    "difficulty": 1
+  },
+  {
+    "id": "s04-q02",
+    "section": 4,
+    "type": "single",
+    "question": "What is the step called where Alice and Bob publicly compare their bases and keep only the rounds where they matched?",
+    "choices": [
+      "Sifting",
+      "Distillation",
+      "Amplification",
+      "Authentication"
+    ],
+    "answer": 0,
+    "explanation": "Sifting.  The bases must be revealed publicly, but the bit values must not be.",
+    "difficulty": 1
+  },
+  {
+    "id": "s04-q03",
+    "section": 4,
+    "type": "truefalse",
+    "question": "In an ideal BB84 run with no eavesdropper, the quantum bit error rate is zero.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "With matching bases the outcome is always correct, so the ideal QBER is 0%.",
+    "difficulty": 1
+  },
+  {
+    "id": "s04-q04",
+    "section": 4,
+    "type": "single",
+    "question": "About what quantum bit error rate indicates an eavesdropper in a one-way BB84 system?",
+    "choices": [
+      "11%",
+      "50%",
+      "0%",
+      "90%"
+    ],
+    "answer": 0,
+    "explanation": "Around 11% is the standard threshold: roughly 25% of the sifted bits are exposed and half of those are corrupted.",
+    "difficulty": 1
+  },
+  {
+    "id": "s04-q05",
+    "section": 4,
+    "type": "multi",
+    "question": "Which are genuine requirements for a one-time pad?",
+    "choices": [
+      "The key must be used only once",
+      "The key must be as long as the message",
+      "The key must be perfectly random",
+      "The key must be shared publicly"
+    ],
+    "answer": [
+      0,
+      1,
+      2
+    ],
+    "explanation": "A one-time pad needs a one-time, uniformly random, equal-length key -- and it must be shared secretly, not publicly.",
+    "difficulty": 1
+  },
+  {
+    "id": "s04-q06",
+    "section": 4,
+    "type": "single",
+    "question": "If Eve intercepts every photon, measures it in a basis of her own choosing and resends it in that same basis, about what fraction of the sifted key bits does she get wrong?",
+    "choices": [
+      "25%",
+      "0%",
+      "50%",
+      "75%"
+    ],
+    "answer": 0,
+    "explanation": "Half the time she picks Alice's basis and causes no error; half the time she picks the other one and Bob's reading is random.  Q = 1/2 * 0 + 1/2 * 1/2 = 25%.",
+    "difficulty": 1
+  },
+  {
+    "id": "s04-q07",
+    "section": 4,
+    "type": "single",
+    "question": "Eve intercepts, measures, and resends in a *random* basis instead of the one she measured in.  What is the resulting QBER?",
+    "choices": [
+      "25%",
+      "37.5%",
+      "50%",
+      "12.5%"
+    ],
+    "answer": 1,
+    "explanation": "1/4 of the rounds are perfect, and the other 3/4 have a 50% error rate: 3/8 = 37.5%.",
+    "difficulty": 1
+  }
+]

@@ -1,0 +1,266 @@
+<h1 id="section-16-machine-learning-foundation">Section 16 — Machine Learning Foundation</h1>
+<blockquote>
+<p><strong>Course section</strong> 16 of 17 · <strong>Lab</strong> <a href="../labs/L16_machine_learning_foundation/lab.py"><code>L16</code></a> · <strong>Quiz</strong> 8 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Describe the structure of a machine-learning system and name the stages.</li>
+<li>Train a linear model with gradient descent and explain the learning rate.</li>
+<li>Diagnose underfitting and overfitting, and use a train/test split.</li>
+<li>Fit a logistic (sigmoid) model and use the log-loss.</li>
+<li>Explain what L1 and L2 regularization do, and why they differ.</li>
+<li>Write a one-hidden-layer neural network and its back-propagation.</li>
+</ul>
+<h2 id="the-lectures">The lectures</h2>
+<table>
+<thead>
+<tr>
+<th>Lecture</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Introduction to Machine Learning</td>
+<td>the three ingredients: data, model, loss</td>
+</tr>
+<tr>
+<td>What Is AI?</td>
+<td>AI ⊃ ML ⊃ DL, and where quantum ML fits</td>
+</tr>
+<tr>
+<td>Structure of ML Systems</td>
+<td>the pipeline from data collection to deployment</td>
+</tr>
+<tr>
+<td>Learning with Models</td>
+<td>parameters, and fitting them</td>
+</tr>
+<tr>
+<td>Speed Up Learning</td>
+<td>gradient descent, learning rate, feature scaling</td>
+</tr>
+<tr>
+<td>Underfit and Overfit</td>
+<td>bias, variance, and the train/test split</td>
+</tr>
+<tr>
+<td>Classification</td>
+<td>labels, decision boundaries, the confusion matrix</td>
+</tr>
+<tr>
+<td>Sigmoid Models</td>
+<td>logistic regression and the log-loss</td>
+</tr>
+<tr>
+<td>Regularization 1 / 2</td>
+<td>L2 and L1, and what they do to the weights</td>
+</tr>
+<tr>
+<td>Machine Learning Libraries</td>
+<td>the same model in scikit-learn</td>
+</tr>
+<tr>
+<td>Machine Learning Coding</td>
+<td>a classifier written from scratch</td>
+</tr>
+<tr>
+<td>Multi-Layer Network 1</td>
+<td>forward pass, sigmoid, back-propagation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-three-ingredients">The three ingredients</h2>
+<table>
+<thead>
+<tr>
+<th>Ingredient</th>
+<th>What it is</th>
+<th>Example in this course</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>examples with the right answers</td>
+<td>two concentric rings</td>
+</tr>
+<tr>
+<td>model</td>
+<td>a family of functions with tunable knobs</td>
+<td><span class="arithmatex">\(w \cdot x + b\)</span></td>
+</tr>
+<tr>
+<td>loss</td>
+<td>a number that says how wrong the model is</td>
+<td>mean squared error</td>
+</tr>
+</tbody>
+</table>
+<p>Training means nudging the <strong>parameters</strong> until the loss stops falling. The
+whole loop is:</p>
+<pre class="highlight"><code>data -&gt; features -&gt; model -&gt; predictions -&gt; loss
+  ^                                      |
+  +--------- update the parameters ------+</code></pre>
+<h2 id="learning-with-models">Learning with models</h2>
+<p>The simplest model with learnable parameters is a line,
+<span class="arithmatex">\(\hat y = w \cdot x + b\)</span>. Gradient descent on the mean squared error does</p>
+<div class="arithmatex">\[
+w \leftarrow w - \eta\, \frac{\partial L}{\partial w}
+\]</div>
+<p>where <span class="arithmatex">\(\eta\)</span> is the learning rate. Too small and you crawl; too large and
+you overshoot and diverge.</p>
+<p><strong>Feature scaling</strong> is the single biggest speed-up. If one feature is
+measured in millimetres and another in kilometres, the gradient is
+dominated by the big one, and the same learning rate that converges on
+scaled features will <em>explode</em> on unscaled ones. The standard fix is
+standardization: subtract the mean, divide by the standard deviation.</p>
+<h2 id="underfitting-and-overfitting">Underfitting and overfitting</h2>
+<p>The lab's dataset is two concentric rings — the classic case where a
+straight line cannot do better than chance:</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>train accuracy</th>
+<th>test accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>linear</td>
+<td>0.587</td>
+<td>0.500</td>
+</tr>
+<tr>
+<td>quadratic (adds <span class="arithmatex">\(x^2, y^2, xy\)</span>)</td>
+<td>0.980</td>
+<td>0.960</td>
+</tr>
+</tbody>
+</table>
+<p>Underfitting is <strong>high bias</strong>: the model is too simple to capture the
+pattern. Overfitting is <strong>high variance</strong>: the model is so flexible that it
+memorises noise. The lab makes the overfitting curve visible by fitting
+<span class="arithmatex">\(\sin(2\pi x) + \text{noise}\)</span> with polynomials of increasing degree using
+only 10 of 20 points:</p>
+<table>
+<thead>
+<tr>
+<th>degree</th>
+<th>train RMSE</th>
+<th>test RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.5538</td>
+<td>0.5220</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.1237</td>
+<td>0.1946</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.0840</td>
+<td>0.1870</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.0463</td>
+<td>0.3148</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.0337</td>
+<td>0.4537</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0.0338</td>
+<td>0.5365</td>
+</tr>
+</tbody>
+</table>
+<p>The training error falls monotonically; the test error has a minimum and
+then turns back up. <strong>Only a held-out test set can tell you where the
+sweet spot is.</strong></p>
+<h2 id="classification-and-the-sigmoid">Classification and the sigmoid</h2>
+<p>A logistic-regression model outputs a probability:</p>
+<div class="arithmatex">\[
+z = w \cdot x + b, \qquad p = \sigma(z) = \frac{1}{1 + e^{-z}}
+\]</div>
+<p>The decision boundary is where <span class="arithmatex">\(p = 0.5\)</span>, i.e. where <span class="arithmatex">\(z = 0\)</span> — a <em>straight
+line</em> in feature space, even though <span class="arithmatex">\(p\)</span> itself is curved. The loss is the
+<strong>log-loss</strong> (binary cross-entropy):</p>
+<div class="arithmatex">\[
+L = -\bigl[y\log p + (1-y)\log(1-p)\bigr]
+\]</div>
+<p>which is the same "surprise" measure as the entropy in section 10: <span class="arithmatex">\(-\log p\)</span>
+is how many bits of surprise the model assigned to the answer it got wrong.</p>
+<p>Accuracy alone is not enough. The confusion matrix gives precision
+(<span class="arithmatex">\(TP/(TP+FP)\)</span>), recall (<span class="arithmatex">\(TP/(TP+FN)\)</span>) and <span class="arithmatex">\(F_1\)</span>.</p>
+<h2 id="regularization">Regularization</h2>
+<p>Add a penalty for large weights:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{L2 (ridge):}\quad &amp; L + \frac{\lambda}{2}\lVert w\rVert^2\\
+\text{L1 (lasso):}\quad &amp; L + \lambda \lVert w\rVert_1
+\end{aligned}
+\]</div>
+<p>L2 shrinks every weight smoothly. L1 can drive some weights <em>exactly</em> to
+zero, which is how lasso performs feature selection. On the lab's data
+with one pure-noise feature:</p>
+<table>
+<thead>
+<tr>
+<th>regularizer</th>
+<th>weight on the noise feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td>0.8386</td>
+</tr>
+<tr>
+<td>L2 (ridge)</td>
+<td>0.3474</td>
+</tr>
+<tr>
+<td>L1 (lasso)</td>
+<td>0.0561</td>
+</tr>
+</tbody>
+</table>
+<h2 id="neural-networks">Neural networks</h2>
+<p>One hidden layer with sigmoid activations:</p>
+<div class="arithmatex">\[
+a_1 = \sigma(W_1 x + b_1), \qquad a_2 = \sigma(W_2 a_1 + b_2)
+\]</div>
+<p>The non-linearity is the point: stacking <em>linear</em> layers still gives a
+linear model. The lab trains such a network on <strong>XOR</strong> — a problem no
+single linear layer can solve — and it converges to the right answers.</p>
+<p>This is the idea behind quantum neural networks in the wider literature: a
+variational circuit is a hidden layer whose weights are trained the same
+way.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L16_machine_learning_foundation/lab.py</code></pre>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you name the three ingredients and the seven stages of an ML
+      system?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain, with an example, why feature scaling matters for
+      gradient descent?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know the difference between high bias and high variance, and
+      how you tell them apart?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you write the log-loss and say what <span class="arithmatex">\(-\log p\)</span> means?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain the difference between L1 and L2 in one sentence?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L16_machine_learning_foundation/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 17 — <a href="17-quantum-ml.md">Quantum Machine Learning with Qiskit</a>. Now
+replace the distance and the kernel with quantum circuits.</p>

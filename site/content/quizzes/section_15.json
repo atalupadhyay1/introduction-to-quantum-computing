@@ -1,0 +1,106 @@
+[
+  {
+    "id": "s15-q01",
+    "section": 15,
+    "type": "single",
+    "question": "In Qiskit 2.x, which object runs a circuit on a simulator?",
+    "choices": [
+      "BasicAer.get_backend",
+      "AerSimulator",
+      "QuantumInstance",
+      "qiskit.algorithms.Shor"
+    ],
+    "answer": 1,
+    "explanation": "BasicAer, QuantumInstance and qiskit.algorithms.Shor were all removed in Qiskit 1.0.",
+    "difficulty": 1
+  },
+  {
+    "id": "s15-q02",
+    "section": 15,
+    "type": "single",
+    "question": "What is the modern way to bind parameters to a circuit?",
+    "choices": [
+      "bind_parameters",
+      "assign_parameters",
+      "set_parameters_only",
+      "fix_parameters"
+    ],
+    "answer": 1,
+    "explanation": "bind_parameters was removed; assign_parameters returns a new circuit.",
+    "difficulty": 1
+  },
+  {
+    "id": "s15-q03",
+    "section": 15,
+    "type": "truefalse",
+    "question": "Shor's algorithm is really a period-finding algorithm, and the factoring step is classical.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "The quantum part finds the period r of a^x mod N; gcd(a^(r/2) +/- 1, N) then factors N classically.",
+    "difficulty": 1
+  },
+  {
+    "id": "s15-q04",
+    "section": 15,
+    "type": "single",
+    "question": "In a period-finding circuit with m counting qubits, the measurement peaks sit at multiples of...",
+    "choices": [
+      "2^m / r",
+      "2^m * r",
+      "r / 2^m",
+      "m / r"
+    ],
+    "answer": 0,
+    "explanation": "That is why the continued-fraction step recovers r from the measured value.",
+    "difficulty": 1
+  },
+  {
+    "id": "s15-q05",
+    "section": 15,
+    "type": "multi",
+    "question": "Which of these are legitimate modern Qiskit 2.x APIs?",
+    "choices": [
+      "Statevector(circuit)",
+      "Operator(circuit)",
+      "qiskit.algorithms.phase_estimation",
+      "qiskit_aer.AerSimulator"
+    ],
+    "answer": [
+      0,
+      1,
+      3
+    ],
+    "explanation": "qiskit.algorithms was removed entirely in Qiskit 1.0.",
+    "difficulty": 1
+  },
+  {
+    "id": "s15-q06",
+    "section": 15,
+    "type": "single",
+    "question": "In Qiskit, which qubit does the leftmost character of a counts bitstring refer to?",
+    "choices": [
+      "Qubit 0",
+      "The highest-numbered qubit",
+      "It depends",
+      "The control qubit"
+    ],
+    "answer": 1,
+    "explanation": "Qiskit's bitstrings are printed most-significant-qubit first, i.e. q_{n-1} ... q_0.",
+    "difficulty": 1
+  },
+  {
+    "id": "s15-q07",
+    "section": 15,
+    "type": "single",
+    "question": "Why is the course's Shor code 'temporary fix' needed?",
+    "choices": [
+      "Because Qiskit removed the Shor class, so the circuit has to be rebuilt by hand",
+      "Because of a hardware bug",
+      "Because numpy changed",
+      "Because the licence expired"
+    ],
+    "answer": 0,
+    "explanation": "The 'Shor's Algorithm - Temporary Fix' course article explains exactly this.",
+    "difficulty": 1
+  }
+]

@@ -1,0 +1,117 @@
+<h1 id="section-5-developing-a-math-model-for-quantum-physics">Section 5 — Developing a Math Model for Quantum Physics</h1>
+<blockquote>
+<p><strong>Course section</strong> 5 of 17 · <strong>Lab</strong> <a href="../labs/L08_math_model/lab.py"><code>L08</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Write a pure qubit state, normalize it, and read probabilities off it.</li>
+<li>State the Born rule and the normalization condition.</li>
+<li>Explain what a "probability subtraction" trick is and why it is useful.</li>
+<li>Distinguish deterministic from probabilistic operations, and evolution
+  from collapse.</li>
+</ul>
+<h2 id="from-physics-to-a-model">From physics to a model</h2>
+<p>Von Neumann's model of a measurement has two stages:</p>
+<ol>
+<li><strong>Evolution</strong> — a deterministic, reversible, unitary transformation
+   (Schrödinger evolution).</li>
+<li><strong>Collapse</strong> — a non-unitary projection onto an eigenstate of the
+   measurement operator.</li>
+</ol>
+<p>The course's "Subtractive Probabilities Through Complex Numbers" and
+"Modeling Superposition Through Matrices" articles are the two halves of
+this: the first shows how to <em>get</em> a probability, the second shows how
+superposition is <em>represented</em>.</p>
+<h2 id="the-state">The state</h2>
+<p>A pure qubit state is</p>
+<div class="arithmatex">\[
+|\psi\rangle = \alpha |0\rangle + \beta |1\rangle, \qquad
+|\alpha|^2 + |\beta|^2 = 1
+\]</div>
+<p>with the probabilities given by the <strong>Born rule</strong>:</p>
+<div class="arithmatex">\[
+P(0) = |\alpha|^2, \qquad P(1) = |\beta|^2
+\]</div>
+<p>Written as a column vector:</p>
+<div class="arithmatex">\[
+|\psi\rangle = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}
+\]</div>
+<h2 id="subtracting-probabilities">Subtracting probabilities</h2>
+<p>Here is the trick the course builds on. Suppose you want the probability of
+"outcome 0" for a state <span class="arithmatex">\(|\psi\rangle = \alpha|0\rangle + \beta|1\rangle\)</span>:</p>
+<div class="arithmatex">\[
+P(0) = |\langle 0 | \psi\rangle|^2
+\]</div>
+<p>The <strong>subtractive</strong> method works backwards from the total. Since the two
+outcomes are the only ones available and the state is normalized,</p>
+<div class="arithmatex">\[
+P(0) = 1 - P(1)
+\]</div>
+<p>and <span class="arithmatex">\(P(1)\)</span> is obtained by projecting the state onto <span class="arithmatex">\(|1\rangle\)</span> and taking
+the squared modulus. In code this is a single matrix-vector product, and
+the reason the course insists on the algebra is that the same projection
+gives you the <em>post-measurement</em> state for free.</p>
+<h2 id="superposition-through-matrices">Superposition through matrices</h2>
+<p>Every gate is a <span class="arithmatex">\(2\times2\)</span> complex matrix acting on the column vector:</p>
+<div class="arithmatex">\[
+|\psi'\rangle = U |\psi\rangle
+\]</div>
+<p>and the states reachable from <span class="arithmatex">\(|0\rangle\)</span> are exactly the columns of <span class="arithmatex">\(U\)</span>.
+If the columns of <span class="arithmatex">\(U\)</span> are <span class="arithmatex">\(|u_0\rangle\)</span> and <span class="arithmatex">\(|u_1\rangle\)</span> then</p>
+<div class="arithmatex">\[
+U = \begin{pmatrix} u_{00} &amp; u_{10} \\ u_{01} &amp; u_{11} \end{pmatrix}
+\]</div>
+<p>— the first <em>column</em> is the image of <span class="arithmatex">\(|0\rangle\)</span> and the second is the image
+of <span class="arithmatex">\(|1\rangle\)</span>. Getting this orientation backwards is the single most
+common bug in a first quantum program, and lab L08 checks it explicitly.</p>
+<h2 id="deterministic-versus-probabilistic">Deterministic versus probabilistic</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Deterministic</th>
+<th>Probabilistic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Example</td>
+<td>X gate, Z gate</td>
+<td>Measurement</td>
+</tr>
+<tr>
+<td>Reversible?</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Input <span class="arithmatex">\(\to\)</span> output</td>
+<td>one to one</td>
+<td>many to one</td>
+</tr>
+<tr>
+<td>Physics</td>
+<td>unitary evolution</td>
+<td>collapse</td>
+</tr>
+</tbody>
+</table>
+<p>The whole point of the model is that <strong>only measurement is
+irreversible</strong>. Everything else in a quantum program can be undone.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L08_math_model/lab.py</code></pre>
+<p>The lab builds the math model from scratch, checks that the columns of a
+gate matrix are the images of the basis states, and compares the
+"subtractive probability" method against direct projection.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you write down a normalized state and read two probabilities off
+      it?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain the subtractive method in your own words?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know which column of a gate matrix is the image of <span class="arithmatex">\(|0\rangle\)</span>?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L08_math_model/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 6 — <a href="06-spin-states.md">Quantum Physics of Spin States</a>. The
+photons were a warm-up; spin gives you a second, very physical route to the
+same mathematics.</p>

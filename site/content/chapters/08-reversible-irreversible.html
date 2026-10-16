@@ -1,0 +1,116 @@
+<h1 id="section-8-reversible-and-irreversible-state-transformations">Section 8 — Reversible and Irreversible State Transformations</h1>
+<blockquote>
+<p><strong>Course section</strong> 8 of 17 · <strong>Lab</strong> <a href="../labs/L11_reversible_entanglement/lab.py"><code>L11</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Say why a gate is reversible and what "unitary" has to do with it.</li>
+<li>Distinguish the reversible operations (gates) from the irreversible ones
+  (measurement, reset).</li>
+<li>State and apply the no-cloning theorem's consequences.</li>
+<li>Build a circuit that computes a classical function <em>in place</em>.</li>
+</ul>
+<h2 id="reversible-means-invertible">Reversible means invertible</h2>
+<p>A gate <span class="arithmatex">\(U\)</span> is reversible because</p>
+<div class="arithmatex">\[
+U^\dagger U = I \quad\Longrightarrow\quad U^{-1} = U^\dagger
+\]</div>
+<p>so you can always undo it. Concretely: <span class="arithmatex">\(H^{-1} = H\)</span>, <span class="arithmatex">\(X^{-1} = X\)</span>,
+<span class="arithmatex">\(T^{-1} = T^\dagger = T^3\)</span>.</p>
+<p>The corollary is the one that matters for computing: <strong>you cannot have a
+quantum program that computes a function and then forgets the input.</strong>
+Any classical function you want to compute with a quantum circuit must be
+written so that the input is preserved, typically in extra "ancilla"
+qubits.</p>
+<p>The lab's XOR construction is exactly this. With an ancilla <span class="arithmatex">\(C = |0\rangle\)</span>:</p>
+<div class="arithmatex">\[
+\text{Toffoli}(A,B;C)\;\to\;\text{Toffoli}(A,B;C)\;\to\;\text{CNOT}(B \to A)
+\]</div>
+<p>computes <span class="arithmatex">\((A \oplus B, B, 0)\)</span> — the XOR of the two inputs, with the
+original inputs intact and the ancilla returned to <span class="arithmatex">\(|0\rangle\)</span>. The first
+Toffoli <em>computes</em> <span class="arithmatex">\(A \land B\)</span> into <span class="arithmatex">\(C\)</span>, the second <em>uncomputes</em> it (which
+is possible because the Toffoli is its own inverse), and the CNOT does the
+XOR using the copy.</p>
+<h2 id="irreversible-operations">Irreversible operations</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Irreversible?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Any unitary gate</td>
+<td>no</td>
+<td>it has an inverse</td>
+</tr>
+<tr>
+<td>Measurement</td>
+<td><strong>yes</strong></td>
+<td>many-to-one, information is destroyed</td>
+</tr>
+<tr>
+<td>Reset to $</td>
+<td>0\rangle$</td>
+<td><strong>yes</strong></td>
+</tr>
+<tr>
+<td>Preparation of a state</td>
+<td><strong>yes</strong></td>
+<td>the state you prepared is gone</td>
+</tr>
+</tbody>
+</table>
+<p>Measurement is modelled by a projector <span class="arithmatex">\(P = |0\rangle\langle0|\)</span> (or its
+partner). The post-measurement state is</p>
+<div class="arithmatex">\[
+\lvert\psi'\rangle = \frac{P\lvert\psi\rangle}{\lVert P\lvert\psi\rangle\rVert}
+\]</div>
+<p>— the <em>normalized projection</em>, which is why the post-measurement state is
+always a basis state (or a superposition within a degenerate subspace).</p>
+<h2 id="no-cloning">No-cloning</h2>
+<p><strong>The theorem.</strong> There is no unitary operation that maps
+<span class="arithmatex">\(|\psi\rangle \mapsto |\psi\rangle|\psi\rangle\)</span> for every unknown state
+<span class="arithmatex">\(|\psi\rangle\)</span>.</p>
+<p><strong>The proof sketch.</strong> If such a <span class="arithmatex">\(U\)</span> existed, then <span class="arithmatex">\(U(|0\rangle|0\rangle) =
+|00\rangle\)</span> and <span class="arithmatex">\(U(|1\rangle|1\rangle) = |11\rangle\)</span>. By linearity,
+<span class="arithmatex">\(U(|+\rangle|+\rangle) = \frac12(|00\rangle + |11\rangle)\)</span>. But cloning
+should give <span class="arithmatex">\(|+\rangle|+\rangle = \frac12(|00\rangle + |01\rangle +
+|10\rangle + |11\rangle)\)</span>. These differ, so no such <span class="arithmatex">\(U\)</span> exists.</p>
+<p><strong>Why it matters.</strong> It is the reason quantum cryptography is interesting
+(an eavesdropper cannot copy the qubits and keep a perfect copy) and the
+reason quantum error correction is hard (you cannot back up a qubit).</p>
+<p>Note that the theorem is about <em>unknown</em> states: you can clone a known
+state, and you can clone a whole <em>basis</em> consistently, which is exactly
+what the classical "intercept and resend" attack does.</p>
+<h2 id="different-bases-different-answers">Different bases, different answers</h2>
+<p>Two states can be perfectly distinguishable in one basis and completely
+indistinguishable in another:</p>
+<div class="arithmatex">\[
+|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt2},
+\qquad
+|-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt2}
+\]</div>
+<p>Both give 50/50 in the <span class="arithmatex">\(Z\)</span> basis; they are perfectly distinguishable in the
+<span class="arithmatex">\(X\)</span> basis (measure with <span class="arithmatex">\(H\)</span> first, then in <span class="arithmatex">\(Z\)</span>). The overlap
+<span class="arithmatex">\(\langle +|-\rangle = 0\)</span> is the right measure of "how different" two
+states are, and it is the quantity the quantum kernel computes in section 17.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L11_reversible_entanglement/lab.py</code></pre>
+<p>The lab builds the in-place XOR circuit above, verifies the ancilla is
+restored, shows that <span class="arithmatex">\(H\)</span> before <span class="arithmatex">\(X\)</span> is what makes "different bases" give
+random answers, and introduces multi-qubit systems and entanglement.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain why a classical function computed by a quantum
+      circuit must preserve its input?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know the one-line proof idea for no-cloning?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you list which of measurement, reset, X, CNOT and H are
+      reversible?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L11_reversible_entanglement/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 9 — <a href="09-multi-qubit.md">Multi-Qubit Systems</a>. One qubit is
+understood; now build the tensor products.</p>

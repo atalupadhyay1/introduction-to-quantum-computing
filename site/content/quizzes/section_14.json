@@ -1,0 +1,61 @@
+[
+  {
+    "id": "s14-q01",
+    "section": 14,
+    "type": "single",
+    "question": "Where do you run a quantum circuit on real IBM hardware?",
+    "choices": [
+      "IBM Quantum Experience, at quantum-computing.ibm.com",
+      "At quantum-computing.ibm.com only",
+      "On a local desktop",
+      "Inside the Qiskit Python package"
+    ],
+    "answer": 0,
+    "explanation": "The course's 'IBM Quantum Note' points at the current URL.",
+    "difficulty": 1
+  },
+  {
+    "id": "s14-q02",
+    "section": 14,
+    "type": "truefalse",
+    "question": "To run a circuit on real hardware you need a quantum experience account.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "The service is account-based and free tier is available for learning.",
+    "difficulty": 1
+  },
+  {
+    "id": "s14-q03",
+    "section": 14,
+    "type": "single",
+    "question": "What is the main practical difference between a simulator and a real device when you submit a job?",
+    "choices": [
+      "The simulator is instant, the device is queued",
+      "The simulator is free, the device is not",
+      "There is no difference",
+      "The device gives exact amplitudes"
+    ],
+    "answer": 0,
+    "explanation": "Real devices run in queues with a calibration that changes over time.",
+    "difficulty": 1
+  },
+  {
+    "id": "s14-q04",
+    "section": 14,
+    "type": "multi",
+    "question": "Which of these are things you can do on the IBM Quantum platform?",
+    "choices": [
+      "Run a circuit on a simulator",
+      "Run a circuit on a real QPU",
+      "Inspect the calibration data",
+      "Run a classical neural network"
+    ],
+    "answer": [
+      0,
+      1,
+      2
+    ],
+    "explanation": "The platform is for quantum circuits; classical neural networks are not its job.",
+    "difficulty": 1
+  }
+]

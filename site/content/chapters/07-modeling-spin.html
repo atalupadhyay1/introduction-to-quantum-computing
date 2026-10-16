@@ -1,0 +1,148 @@
+<h1 id="section-7-modeling-quantum-spin-states-with-math">Section 7 — Modeling Quantum Spin States with Math</h1>
+<blockquote>
+<p><strong>Course section</strong> 7 of 17 · <strong>Lab</strong> <a href="../labs/L10_dirac_notation/lab.py"><code>L10</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Write a spin state as a column vector and apply a gate to it.</li>
+<li>Use Dirac notation fluently: bras, kets, inner and outer products.</li>
+<li>Write and use the Hadamard, <span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(Y\)</span> and <span class="arithmatex">\(Z\)</span> gates.</li>
+<li>Read probabilities off a state vector with the Born rule.</li>
+</ul>
+<h2 id="column-matrix-representation">Column matrix representation</h2>
+<p>A pure spin state is a <strong>column vector of complex amplitudes</strong>:</p>
+<div class="arithmatex">\[
+|\psi\rangle = \alpha|0\rangle + \beta|1\rangle
+\quad\longleftrightarrow\quad
+\begin{pmatrix}\alpha \\ \beta\end{pmatrix},
+\qquad |\alpha|^2 + |\beta|^2 = 1
+\]</div>
+<p>A mixed state is a density matrix <span class="arithmatex">\(\rho = |\psi\rangle\langle\psi|\)</span>, but
+you do not need it until the course's later sections.</p>
+<h2 id="dirac-notation">Dirac notation</h2>
+<table>
+<thead>
+<tr>
+<th>Notation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\lvert\psi\rangle\)</span></td>
+<td>ket — a state</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\langle\psi\rvert\)</span></td>
+<td>bra — the <em>adjoint</em> of the ket</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\langle\phi\lvert\psi\rangle\)</span></td>
+<td>inner product — a complex number</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\lvert\phi\rangle\langle\psi\rvert\)</span></td>
+<td>outer product — an operator</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\langle\psi\lvert\psi\rangle\)</span></td>
+<td>1 for a normalized state</td>
+</tr>
+</tbody>
+</table>
+<p>The adjoint rule is the one to memorise: <span class="arithmatex">\(\langle\psi| = \psi^\dagger\)</span>, and
+for a column vector <span class="arithmatex">\(\psi = (\psi_1, \psi_2)^T\)</span> the bra is the <em>row</em> vector
+<span class="arithmatex">\((\psi_1^*, \psi_2^*)\)</span>.</p>
+<h2 id="the-gates">The gates</h2>
+<div class="arithmatex">\[
+H = \frac{1}{\sqrt2}\begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -1\end{pmatrix},
+\qquad
+X = \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{pmatrix},
+\qquad
+Y = \begin{pmatrix} 0 &amp; -i \\ i &amp; 0\end{pmatrix},
+\qquad
+Z = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1\end{pmatrix}
+\]</div>
+<p>plus the phase gates</p>
+<div class="arithmatex">\[
+S = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; i\end{pmatrix},
+\qquad
+T = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; e^{i\pi/4}\end{pmatrix}
+\]</div>
+<p>Each one does something specific to the Bloch sphere:</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(X\)</span></td>
+<td>rotate 180° about the <span class="arithmatex">\(x\)</span> axis (bit flip)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(Y\)</span></td>
+<td>rotate 180° about the <span class="arithmatex">\(y\)</span> axis</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(Z\)</span></td>
+<td>rotate 180° about the <span class="arithmatex">\(z\)</span> axis (phase flip)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(H\)</span></td>
+<td>rotate 90° about the axis <span class="arithmatex">\((\hat{x} + \hat{z})/\sqrt2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Two facts worth checking yourself:</p>
+<ul>
+<li><span class="arithmatex">\(H|0\rangle = |+\rangle = (|0\rangle + |1\rangle)/\sqrt2\)</span> and
+  <span class="arithmatex">\(H|1\rangle = |-\rangle = (|0\rangle - |1\rangle)/\sqrt2\)</span>;</li>
+<li><span class="arithmatex">\(H^2 = I\)</span>, so <strong><span class="arithmatex">\(H\)</span> is its own inverse</strong>;</li>
+<li><span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(Y\)</span> and <span class="arithmatex">\(Z\)</span> are Hermitian <em>and</em> unitary, so <span class="arithmatex">\(X^2 = Y^2 = Z^2 = I\)</span>.</li>
+</ul>
+<h2 id="the-operator-picture">The operator picture</h2>
+<p>The alternative to "apply a matrix to a vector" is the <strong>operator
+picture</strong>: a gate is an operator that acts on a ket and produces a new ket,</p>
+<div class="arithmatex">\[
+\hat{A}\lvert\psi\rangle = \lvert\psi'\rangle
+\]</div>
+<p>with matrix elements <span class="arithmatex">\(\langle\phi|\hat{A}|\psi\rangle\)</span> giving the
+transition amplitudes. The two pictures are the same thing; the operator
+picture just makes the symmetry arguments easier to see.</p>
+<p>A useful identity: the adjoint of an operator reverses the order and
+conjugates the bras and kets,</p>
+<div class="arithmatex">\[
+\langle\psi|\hat{A}^\dagger|\phi\rangle = \langle\hat{A}\psi|\phi\rangle
+\]</div>
+<p>which is what lets you "undo" a gate by applying its adjoint.</p>
+<h2 id="the-bloch-sphere">The Bloch sphere</h2>
+<p>Every pure qubit state is a point on the unit sphere. The map from
+<span class="arithmatex">\((\theta, \phi)\)</span> to amplitudes is</p>
+<div class="arithmatex">\[
+\alpha = \cos\frac{\theta}{2}, \qquad \beta = e^{i\phi}\sin\frac{\theta}{2}
+\]</div>
+<p>so the <span class="arithmatex">\(z\)</span>-coordinate of the sphere point is
+<span class="arithmatex">\(z = |\alpha|^2 - |\beta|^2 = P(0) - P(1)\)</span>, and the transverse projection
+has length <span class="arithmatex">\(2|\alpha||\beta| = 2\sqrt{P(0)P(1)}\)</span>. Measuring the state in
+the computational basis gives <span class="arithmatex">\(P(0) = (1 + z)/2\)</span>.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L10_dirac_notation/lab.py</code></pre>
+<p>The lab works in Dirac notation throughout: it applies gates, checks the
+inner-product rules, verifies that every gate matrix is unitary, and shows
+that <span class="arithmatex">\(H\)</span> maps <span class="arithmatex">\(|0\rangle\)</span> to <span class="arithmatex">\(|+\rangle\)</span> and back.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you write <span class="arithmatex">\(\langle\psi|\)</span> given <span class="arithmatex">\(\lvert\psi\rangle\)</span>?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you compute <span class="arithmatex">\(H|0\rangle\)</span> and <span class="arithmatex">\(H|1\rangle\)</span> from the matrix?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know which of <span class="arithmatex">\(H, X, Y, Z, S, T\)</span> are their own inverses?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you relate the Bloch-sphere <span class="arithmatex">\(z\)</span> coordinate to a measurement
+      probability?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L10_dirac_notation/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 8 — <a href="08-reversible-irreversible.md">Reversible and Irreversible State Transformations</a>.
+Everything so far has been reversible. Now find out what changes when a
+measurement enters.</p>

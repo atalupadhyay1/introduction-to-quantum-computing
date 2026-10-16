@@ -1,0 +1,103 @@
+<h1 id="section-14-ibm-quantum-experience">Section 14 — IBM Quantum Experience</h1>
+<blockquote>
+<p><strong>Course section</strong> 14 of 17 · <strong>Lab</strong> <a href="../labs/L15_qiskit/lab.py"><code>L15</code></a> · <strong>Quiz</strong> 4 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Find the current IBM Quantum platform and explain what it offers.</li>
+<li>Describe the difference between running on a simulator and on a real QPU.</li>
+<li>Explain what calibration data is and why it matters.</li>
+<li>Know what a <em>job</em> is in the IBM Quantum workflow.</li>
+</ul>
+<h2 id="where-the-platform-lives">Where the platform lives</h2>
+<p>The course's "IBM Quantum Note" article points at the service. The current
+address is</p>
+<blockquote>
+<p><strong>https://quantum-computing.ibm.com/</strong></p>
+</blockquote>
+<p>(The course was recorded in 2019, when the platform was at a different URL
+— this is one of the few things in the course that has genuinely moved on,
+and the article exists precisely to point you at the right place.)</p>
+<h2 id="what-the-platform-gives-you">What the platform gives you</h2>
+<ul>
+<li><strong>Simulators</strong> — a state-vector simulator and a shot-based one, for
+  everything from 5 to a few hundred qubits.</li>
+<li><strong>Real QPUs</strong> — IBM's superconducting processors, run in a queue.</li>
+<li><strong>Calibration data</strong> — the current <span class="arithmatex">\(T_1\)</span>, <span class="arithmatex">\(T_2\)</span>, gate fidelities and
+  readout errors for the device you are about to use.</li>
+<li><strong>Jobs</strong> — a submission is a <em>job</em> with a status, not an immediate
+  answer.</li>
+</ul>
+<h2 id="simulator-versus-hardware">Simulator versus hardware</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>simulator</th>
+<th>real QPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>latency</td>
+<td>instant</td>
+<td>queued, minutes to hours</td>
+</tr>
+<tr>
+<td>noise</td>
+<td>none (or injectable)</td>
+<td>decoherence, crosstalk, drift</td>
+</tr>
+<tr>
+<td>result</td>
+<td>exact amplitudes or counts</td>
+<td>counts, with an error bar</td>
+</tr>
+<tr>
+<td>qubit count</td>
+<td>hundreds</td>
+<td>tens (hundreds planned)</td>
+</tr>
+<tr>
+<td>cost</td>
+<td>free</td>
+<td>free tier, then paid</td>
+</tr>
+</tbody>
+</table>
+<p>The practical consequence: <strong>your circuit has to fit the device's
+connectivity map</strong>. On a heavy-hex lattice, not every pair of qubits is
+connected, so a good algorithm compiled for an abstract device can need a
+lot of extra SWAP gates on real hardware. <code>transpile()</code> does that for you,
+but it changes the depth — and the depth is what costs you your fidelity.</p>
+<h2 id="the-honest-picture">The honest picture</h2>
+<p>Hardware is improving fast, but a 100-qubit device with 1% two-qubit gate
+error is not yet a machine that can run a deep algorithm. This is why the
+course's algorithms — BB84, Shor's period finding on a handful of qubits —
+are exactly the right scale to study today: they are small enough to run
+on real hardware, and large enough to show the interesting physics.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<p>You do not need an account for anything in this repository — every lab runs
+against a local simulator. But if you want to try the real thing:</p>
+<ol>
+<li>Create a free account at <a href="https://quantum-computing.ibm.com/">https://quantum-computing.ibm.com/</a>.</li>
+<li><code>pip install qiskit-ibm-runtime</code>.</li>
+<li>Save your API token from the platform's account page.</li>
+<li>Load the backend and submit a circuit.</li>
+</ol>
+<pre class="highlight"><code class="language-python">from qiskit_ibm_runtime import QiskitRuntimeService
+service = QiskitRuntimeService.save_account(channel="ibm_quantum_platform", token="...")
+backend = service.least_busy(operational=True, simulator=False)</code></pre>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know the current URL of the IBM Quantum platform?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you name three differences between running on a simulator and on
+      hardware?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know what calibration data is and why you look at it before
+      submitting?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you understand why circuit <em>depth</em> matters more on hardware than
+      in a simulator?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 15 — <a href="15-qiskit.md">IBM Qiskit: Programming and Algorithms</a>. The
+toolkit itself, and two real algorithms.</p>

@@ -1,0 +1,103 @@
+<h1 id="section-6-quantum-physics-of-spin-states">Section 6 — Quantum Physics of Spin States</h1>
+<blockquote>
+<p><strong>Course section</strong> 6 of 17 · <strong>Lab</strong> <a href="../labs/L09_spin_states/lab.py"><code>L09</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Describe the spin-1/2 system and its two basis states.</li>
+<li>Explain the Stern-Gerlach experiment and what it proved.</li>
+<li>Connect spin-up/spin-down to <span class="arithmatex">\(|0\rangle\)</span> and <span class="arithmatex">\(|1\rangle\)</span>.</li>
+<li>Say why spin makes a <em>better</em> qubit than photon polarization for some
+  experiments.</li>
+</ul>
+<h2 id="spin-12">Spin-1/2</h2>
+<p>A particle with spin <span class="arithmatex">\(\tfrac12\)</span> — an electron, a proton, a neutron — has
+exactly two possible results when you measure the component of its angular
+momentum along any axis:</p>
+<ul>
+<li>spin <strong>up</strong>: <span class="arithmatex">\(S_z = +\tfrac12\hbar\)</span></li>
+<li>spin <strong>down</strong>: <span class="arithmatex">\(S_z = -\tfrac12\hbar\)</span></li>
+</ul>
+<p>This is the definition of a two-level system, so a spin-1/2 particle <em>is</em> a
+qubit. By convention:</p>
+<div class="arithmatex">\[
+|\uparrow\rangle \equiv |0\rangle, \qquad
+|\downarrow\rangle \equiv |1\rangle
+\]</div>
+<h2 id="the-stern-gerlach-experiment">The Stern-Gerlach experiment</h2>
+<p>Silver atoms fired through a non-uniform magnetic field split into <strong>two</strong>
+beams, not a continuous spread. Before the experiment, one expected a
+continuous distribution of magnetic moment. The result said: the component
+is quantised.</p>
+<p>The devastating follow-up is <em>Stern-Gerlach on a superposition</em>. Take an
+atom whose spin is already in a superposition of up and down, and pass it
+through an SG apparatus oriented along a <strong>different</strong> axis. You do not get
+"up and down along the new axis" — you get a <em>third</em> distribution, with
+<span class="arithmatex">\(50/50\)</span> outcomes along the new axis for a spin prepared along <span class="arithmatex">\(\hat{z}\)</span>.</p>
+<p>That is the "quantum" of it. The pre-existing state does not survive the
+measurement; the apparatus <em>overwrites</em> it with a new one. And the
+probabilities are the squares of amplitudes in the new basis.</p>
+<h2 id="superposition-in-the-bloch-sphere">Superposition in the Bloch sphere</h2>
+<p>A spin-1/2 state in a magnetic field precesses. The full state is</p>
+<div class="arithmatex">\[
+|\psi\rangle = \cos\frac{\theta}{2}\,|0\rangle + e^{i\phi}\sin\frac{\theta}{2}\,|1\rangle
+\]</div>
+<p>with <span class="arithmatex">\(0 \le \theta \le \pi\)</span> and <span class="arithmatex">\(0 \le \phi &lt; 2\pi\)</span>. The angle <span class="arithmatex">\(\theta\)</span> is
+the polar angle on the Bloch sphere and <span class="arithmatex">\(\phi\)</span> is the azimuth:</p>
+<ul>
+<li><span class="arithmatex">\(\theta = 0\)</span> → <span class="arithmatex">\(|0\rangle\)</span> (spin up), the north pole;</li>
+<li><span class="arithmatex">\(\theta = \pi\)</span> → <span class="arithmatex">\(|1\rangle\)</span> (spin down), the south pole;</li>
+<li><span class="arithmatex">\(\theta = \pi/2\)</span> → the equator, the equal-probability superpositions
+  <span class="arithmatex">\(|+\rangle\)</span> and <span class="arithmatex">\(|-\rangle\)</span>.</li>
+</ul>
+<h2 id="spin-versus-polarization">Spin versus polarization</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Photon polarization</th>
+<th>Spin-1/2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basis states</td>
+<td>H / V</td>
+<td>up / down</td>
+</tr>
+<tr>
+<td>Direct measurement?</td>
+<td>yes, with a polarizer</td>
+<td>yes, with a Stern-Gerlach apparatus</td>
+</tr>
+<tr>
+<td>Rotation</td>
+<td>rotate the polarizer</td>
+<td>rotate the magnetic field</td>
+</tr>
+<tr>
+<td>Natural implementation</td>
+<td>optics</td>
+<td>semiconductors (qubits)</td>
+</tr>
+</tbody>
+</table>
+<p>Both are two-level systems, so the mathematics is identical. Spins are how
+real hardware implements qubits.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L09_spin_states/lab.py</code></pre>
+<p>The lab simulates the Stern-Gerlach experiment: prepare a state, measure it
+along an arbitrary axis, and check that the distribution matches the Born
+rule for that axis.</p>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you state the two eigenvalues of <span class="arithmatex">\(S_z\)</span>?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain what the Stern-Gerlach experiment showed that classical
+      physics did not expect?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know what a spin prepared along <span class="arithmatex">\(\hat{z}\)</span> gives when measured
+      along <span class="arithmatex">\(\hat{x}\)</span>?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L09_spin_states/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 7 — <a href="07-modeling-spin.md">Modeling Quantum Spin States with Math</a>.
+Now write the spin state as a column vector and start multiplying matrices.</p>

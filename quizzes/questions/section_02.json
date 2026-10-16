@@ -1,0 +1,86 @@
+[
+  {
+    "id": "s02-q01",
+    "section": 2,
+    "type": "single",
+    "question": "According to Malus's law, what is the probability that a photon polarized at angle theta_p passes a polarizer at angle theta_f?",
+    "choices": [
+      "cos(theta_p - theta_f)",
+      "cos^2(theta_p - theta_f)",
+      "sin^2(theta_p - theta_f)",
+      "1/2 always"
+    ],
+    "answer": 1,
+    "explanation": "P(pass) = cos^2(theta_p - theta_f).  At the same angle it is 1, at 90 degrees it is 0.",
+    "difficulty": 1
+  },
+  {
+    "id": "s02-q02",
+    "section": 2,
+    "type": "number",
+    "question": "A photon is polarized at 0 degrees and hits a polarizer at 60 degrees.  What is the probability it passes? (cos^2 of the angle, to 4 decimals)",
+    "choices": [],
+    "answer": 0.25,
+    "explanation": "cos^2(60 degrees) = 0.5^2 = 0.25",
+    "difficulty": 2,
+    "tolerance": 0.0001
+  },
+  {
+    "id": "s02-q03",
+    "section": 2,
+    "type": "single",
+    "question": "What happens when you measure the polarization of a photon that is in a superposition of two polarizations?",
+    "choices": [
+      "You always get the first one",
+      "You always get the second one",
+      "You get one of them at random, with probabilities given by the amplitudes squared",
+      "You get both at once"
+    ],
+    "answer": 2,
+    "explanation": "The Born rule: the probability of an outcome is the squared modulus of its amplitude.",
+    "difficulty": 1
+  },
+  {
+    "id": "s02-q04",
+    "section": 2,
+    "type": "truefalse",
+    "question": "A classical wave and a quantum photon can both be put into a superposition, but only the quantum one collapses to a single definite polarization on measurement.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "This is the 'quantum' part of the photon-polarization story: the measurement is irreversible.",
+    "difficulty": 1
+  },
+  {
+    "id": "s02-q05",
+    "section": 2,
+    "type": "multi",
+    "question": "Which angles are orthogonal (mutually exclusive) polarizations?",
+    "choices": [
+      "0 degrees and 90 degrees",
+      "0 degrees and 180 degrees",
+      "45 degrees and 135 degrees",
+      "0 degrees and 45 degrees"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "Two polarizations are orthogonal when they differ by 90 degrees.  0 and 180 are the same polarization, not orthogonal.",
+    "difficulty": 1
+  },
+  {
+    "id": "s02-q06",
+    "section": 2,
+    "type": "single",
+    "question": "A photon passes a polarizer at 0 degrees, then a second polarizer at 90 degrees.  What is the probability of passing both?",
+    "choices": [
+      "1",
+      "1/2",
+      "0",
+      "1/4"
+    ],
+    "answer": 2,
+    "explanation": "The first polarizer projects the photon onto the 0-degree direction; the 90-degree polarizer is orthogonal to that, so the probability is 0.",
+    "difficulty": 1
+  }
+]

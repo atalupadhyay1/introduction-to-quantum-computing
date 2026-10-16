@@ -1,0 +1,152 @@
+<h1 id="section-13-quantum-programming-with-microsoft-q">Section 13 — Quantum Programming with Microsoft Q</h1>
+<blockquote>
+<p><strong>Course section</strong> 13 of 17 · <strong>Lab</strong> <a href="../labs/L14_qsharp/lab.py"><code>L14</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Read and write basic Q# — <code>let</code> bindings, <code>mutable</code> variables, message
+  passing, <code>if</code>/<code>elif</code>/<code>else</code>.</li>
+<li>Understand Q#'s qubit ordering, and avoid the ordering trap.</li>
+<li>Run the course's <code>QB4</code> program and explain each of its demos.</li>
+<li>Say why learning Q# before Qiskit is worthwhile.</li>
+</ul>
+<h2 id="why-q-first">Why Q# first</h2>
+<p>The course's "Q#, Qiskit, or Cirq?" note makes the argument: Q# has
+almost no classical control flow to hide behind. There are no loops over
+classical data, no <code>if</code> on a classical value, no arrays of classical
+integers. What you write <em>is</em> the quantum program. Learn the physics in
+Q#, then the plumbing in Qiskit.</p>
+<h2 id="the-language-in-one-page">The language in one page</h2>
+<pre class="highlight"><code class="language-qsharp">namespace QC101 {
+    operation Set(desired : Result, q : Qubit) : Unit {
+        if (M(q) != desired) {
+            X(q);
+        }
+    }
+}</code></pre>
+<table>
+<thead>
+<tr>
+<th>Construct</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>let x = 5;</code></td>
+<td>immutable binding</td>
+</tr>
+<tr>
+<td><code>mutable y = 0;</code></td>
+<td>a binding that can be updated</td>
+</tr>
+<tr>
+<td><code>set y = y + 1;</code></td>
+<td>update a mutable binding</td>
+</tr>
+<tr>
+<td><code>Message</code></td>
+<td>a value passed between operations</td>
+</tr>
+<tr>
+<td><code>Qubit</code></td>
+<td>a qubit reference; cannot be copied</td>
+</tr>
+<tr>
+<td><code>Result</code></td>
+<td>the <code>Zero</code> / <code>One</code> outcome of a measurement</td>
+</tr>
+<tr>
+<td><code>return (q0, q1);</code></td>
+<td>a tuple of results, <strong>in reverse qubit order</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-ordering-trap">The ordering trap</h2>
+<p>This is the single most important practical fact in the section, and the
+course has a whole article about it ("Verifying Results").</p>
+<ul>
+<li>A Q# <strong>result array</strong> is printed <strong>right to left</strong>: <code>(q2, q1, q0)</code>.</li>
+<li>A <strong>state vector</strong> is written <strong>left to right</strong>: <span class="arithmatex">\((q_0, q_1, q_2)\)</span>.</li>
+</ul>
+<p>So if you multiply a CCNOT matrix by a state vector to check your result by
+hand, you must <strong>reverse the ordering</strong> first. Get it wrong and you get an
+answer that looks plausible and is wrong.</p>
+<p>The lab demonstrates it directly: with <span class="arithmatex">\(q_0 = 1\)</span> and <span class="arithmatex">\(q_1 = 0\)</span>, Q# reports
+<code>"01"</code> while the same state written in textbook order is <code>"10"</code>.</p>
+<h2 id="the-qb4-program">The QB4 program</h2>
+<p>The course's <code>QB4.qs</code> is a four-qubit demonstration program. It runs
+10 000 trials and prints a histogram over all sixteen bit strings. The
+demos are:</p>
+<table>
+<thead>
+<tr>
+<th>Demo</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NOP</td>
+<td>the default state <code>0000</code></td>
+</tr>
+<tr>
+<td>X</td>
+<td>a single flip</td>
+</tr>
+<tr>
+<td>H</td>
+<td>a superposition</td>
+</tr>
+<tr>
+<td>SWAP</td>
+<td>exchanging two qubits</td>
+</tr>
+<tr>
+<td>CNOT</td>
+<td>a controlled flip</td>
+</tr>
+<tr>
+<td>Bell</td>
+<td><span class="arithmatex">\(H\)</span> then CNOT producing a Bell pair</td>
+</tr>
+<tr>
+<td>Toffoli</td>
+<td>a doubly-controlled flip</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>Set</code> operation is the reusable bit of code: it measures a qubit and
+applies <span class="arithmatex">\(X\)</span> if the outcome is not the one you want. It is the quantum
+version of "set this bit to a given value" — and the reason it needs a
+measurement is that setting a bit is <em>not</em> reversible, unlike <code>X</code>.</p>
+<h2 id="running-it">Running it</h2>
+<p>Q# needs the .NET SDK and the Quantum Development Kit, which is not
+installed in this sandbox. So this repository ships:</p>
+<ul>
+<li><code>qsharp/QB4/QB4.qs</code> — the course's program, modernized (the original
+  targeted the legacy SDK 0.12 and <code>netcoreapp3.1</code>; the copy here targets
+  <code>net8.0</code> and <code>Microsoft.Quantum.Sdk</code> 0.27.0);</li>
+<li><code>qsharp/QB4/QB4.csproj</code> — the modernized project file;</li>
+<li>lab <strong>L14</strong> — a runnable Python <em>transliteration</em> of the same program, so
+  you can see the behaviour without a .NET toolchain.</li>
+</ul>
+<p>To run the real thing:</p>
+<pre class="highlight"><code class="language-bash">dotnet new console -o QB4
+cd QB4
+dotnet add package Microsoft.Quantum.Sdk
+cp ../qsharp/QB4/QB4.qs .
+dotnet run</code></pre>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L14_qsharp/lab.py</code></pre>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you write a Q# operation that sets a qubit to a given value?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know that the result array comes back in reverse qubit order,
+      and that the state vector does not?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you explain what each of the seven QB4 demos shows?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Have you run <code>python labs/L14_qsharp/lab.py</code>?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 14 — <a href="14-ibm-quantum.md">IBM Quantum Experience</a>. The service where
+the circuits run on real hardware.</p>

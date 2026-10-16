@@ -1,0 +1,91 @@
+[
+  {
+    "id": "s12-q01",
+    "section": 12,
+    "type": "single",
+    "question": "What are the three stages of a quantum program?",
+    "choices": [
+      "Init, compute, read out",
+      "Load, save, print",
+      "Compile, link, run",
+      "Setup, loop, exit"
+    ],
+    "answer": 0,
+    "explanation": "Irreversible initialization, reversible gates, irreversible measurement.",
+    "difficulty": 1
+  },
+  {
+    "id": "s12-q02",
+    "section": 12,
+    "type": "single",
+    "question": "Why does a state-vector simulator need memory proportional to 2^n?",
+    "choices": [
+      "It stores one number per basis state",
+      "It stores a full matrix",
+      "It stores the gates",
+      "It stores the shots"
+    ],
+    "answer": 0,
+    "explanation": "There are 2^n basis states and each needs a complex amplitude.",
+    "difficulty": 1
+  },
+  {
+    "id": "s12-q03",
+    "section": 12,
+    "type": "truefalse",
+    "question": "A state-vector simulator and a real quantum computer return the same kind of answer.",
+    "choices": [],
+    "answer": "false",
+    "explanation": "The simulator returns exact amplitudes; the hardware returns counts from sampled measurements.",
+    "difficulty": 1
+  },
+  {
+    "id": "s12-q04",
+    "section": 12,
+    "type": "single",
+    "question": "What does 'compiling' a circuit into a single unitary matrix give you?",
+    "choices": [
+      "The exact output state for any input",
+      "A faster circuit",
+      "A measurement",
+      "A classical program"
+    ],
+    "answer": 0,
+    "explanation": "The product of the gate matrices is the circuit's unitary, so you can apply it to any input state exactly.",
+    "difficulty": 1
+  },
+  {
+    "id": "s12-q05",
+    "section": 12,
+    "type": "multi",
+    "question": "Which are quantum gates that are their own inverses?",
+    "choices": [
+      "H",
+      "X",
+      "Z",
+      "S"
+    ],
+    "answer": [
+      0,
+      1,
+      2
+    ],
+    "explanation": "S is not: S^dagger = S^3, so S applied four times is the identity, not twice.",
+    "difficulty": 1
+  },
+  {
+    "id": "s12-q06",
+    "section": 12,
+    "type": "single",
+    "question": "How many gate applications does a Toffoli (CCNOT) gate need in a two-level quantum computer?",
+    "choices": [
+      "1",
+      "2",
+      "6",
+      "It cannot be implemented"
+    ],
+    "answer": 2,
+    "explanation": "A Toffoli needs at least 6 two-qubit gates in the standard construction.",
+    "difficulty": 1
+  }
+]

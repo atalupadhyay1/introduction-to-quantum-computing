@@ -1,0 +1,126 @@
+{
+  "sections": [
+    {
+      "number": 1,
+      "slug": "01-introduction",
+      "title": "Introduction",
+      "lab": "L01"
+    },
+    {
+      "number": 2,
+      "slug": "02-photon-polarization",
+      "title": "Quantum Physics Through Photon Polarization",
+      "lab": "L02"
+    },
+    {
+      "number": 3,
+      "slug": "03-math-foundation",
+      "title": "Math Foundation",
+      "lab": "L03\u2013L06"
+    },
+    {
+      "number": 4,
+      "slug": "04-quantum-cryptography",
+      "title": "Quantum Cryptography",
+      "lab": "L07"
+    },
+    {
+      "number": 5,
+      "slug": "05-math-model",
+      "title": "A Math Model for Quantum Physics",
+      "lab": "L08"
+    },
+    {
+      "number": 6,
+      "slug": "06-spin-states",
+      "title": "Quantum Physics of Spin States",
+      "lab": "L09"
+    },
+    {
+      "number": 7,
+      "slug": "07-modeling-spin",
+      "title": "Modeling Spin States with Math",
+      "lab": "L10"
+    },
+    {
+      "number": 8,
+      "slug": "08-reversible-irreversible",
+      "title": "Reversible and Irreversible Transformations",
+      "lab": "L11"
+    },
+    {
+      "number": 9,
+      "slug": "09-multi-qubit",
+      "title": "Multi-Qubit Systems",
+      "lab": "L11"
+    },
+    {
+      "number": 10,
+      "slug": "10-entanglement",
+      "title": "Entanglement",
+      "lab": "L11"
+    },
+    {
+      "number": 11,
+      "slug": "11-simulators",
+      "title": "Superposition and Entanglement Simulators",
+      "lab": "L12"
+    },
+    {
+      "number": 12,
+      "slug": "12-quantum-computing-model",
+      "title": "The Quantum Computing Model",
+      "lab": "L13"
+    },
+    {
+      "number": 13,
+      "slug": "13-qsharp",
+      "title": "Microsoft Q# Programming",
+      "lab": "L14"
+    },
+    {
+      "number": 14,
+      "slug": "14-ibm-quantum",
+      "title": "IBM Quantum Experience",
+      "lab": "L15"
+    },
+    {
+      "number": 15,
+      "slug": "15-qiskit",
+      "title": "IBM Qiskit: Programming and Algorithms",
+      "lab": "L15"
+    },
+    {
+      "number": 16,
+      "slug": "16-ml-foundation",
+      "title": "Machine Learning Foundation",
+      "lab": "L16"
+    },
+    {
+      "number": 17,
+      "slug": "17-quantum-ml",
+      "title": "Quantum Machine Learning with Qiskit",
+      "lab": "L17"
+    }
+  ],
+  "appendix": [
+    {
+      "slug": "api-reference",
+      "title": "Api Reference"
+    },
+    {
+      "slug": "appendix",
+      "title": "Appendix"
+    },
+    {
+      "slug": "formula-sheet",
+      "title": "Formula Sheet"
+    },
+    {
+      "slug": "glossary",
+      "title": "Glossary"
+    }
+  ],
+  "generated": null,
+  "questionCount": 104
+}

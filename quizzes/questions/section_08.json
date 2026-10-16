@@ -1,0 +1,90 @@
+[
+  {
+    "id": "s08-q01",
+    "section": 8,
+    "type": "single",
+    "question": "Why is a quantum gate reversible?",
+    "choices": [
+      "Because gates are made of mirrors",
+      "Because the gate matrix is unitary",
+      "Because every gate has an inverse button",
+      "Because measurement is reversible"
+    ],
+    "answer": 1,
+    "explanation": "A unitary matrix is invertible, with inverse equal to its adjoint.",
+    "difficulty": 1
+  },
+  {
+    "id": "s08-q02",
+    "section": 8,
+    "type": "multi",
+    "question": "Which operations are irreversible?",
+    "choices": [
+      "Measurement",
+      "Resetting a qubit to |0>",
+      "Applying an X gate",
+      "Applying a CNOT"
+    ],
+    "answer": [
+      0,
+      1
+    ],
+    "explanation": "Reset and measurement destroy information; X and CNOT are unitary and therefore reversible.",
+    "difficulty": 1
+  },
+  {
+    "id": "s08-q03",
+    "section": 8,
+    "type": "truefalse",
+    "question": "Two different quantum states can have the same measurement statistics in one basis.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "|+> and |-> both give 50/50 in the Z basis but are perfectly distinguishable in the X basis.",
+    "difficulty": 1
+  },
+  {
+    "id": "s08-q04",
+    "section": 8,
+    "type": "single",
+    "question": "What is the no-cloning theorem?",
+    "choices": [
+      "You cannot copy an unknown quantum state exactly",
+      "You cannot delete a quantum state",
+      "You cannot send a qubit faster than light",
+      "You cannot measure a qubit"
+    ],
+    "answer": 0,
+    "explanation": "No-cloning: an arbitrary unknown quantum state cannot be copied perfectly.  Classical bits have no such restriction.",
+    "difficulty": 1
+  },
+  {
+    "id": "s08-q05",
+    "section": 8,
+    "type": "single",
+    "question": "The adjoint of a matrix A is written A^dagger.  How is it defined?",
+    "choices": [
+      "The transpose",
+      "The conjugate transpose",
+      "The inverse",
+      "The element-wise square"
+    ],
+    "answer": 1,
+    "explanation": "A^dagger = (A*)^T, the conjugate transpose.",
+    "difficulty": 1
+  },
+  {
+    "id": "s08-q06",
+    "section": 8,
+    "type": "single",
+    "question": "If a gate's matrix is Hermitian, then...",
+    "choices": [
+      "it is its own inverse",
+      "it is the identity",
+      "it is not reversible",
+      "it measures the qubit"
+    ],
+    "answer": 0,
+    "explanation": "For a Hermitian unitary, A^dagger = A and A^dagger A = I, so A^2 = I.",
+    "difficulty": 1
+  }
+]

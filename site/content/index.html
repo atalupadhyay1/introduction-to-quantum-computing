@@ -1,0 +1,252 @@
+<h1 id="qc101-quantum-computing-introduction-to-quantum-machine-learning">QC101 — Quantum Computing &amp; Introduction to Quantum Machine Learning</h1>
+<p>A complete, interactive study package for the Udemy course
+<a href="https://www.udemy.com/course/qc101-introduction-to-quantum-computing-quantum-physics-for-beginners/"><strong>QC101 — Introduction to Quantum Computing / Quantum Physics for
+Beginners</strong></a>
+by Kumaresan Ramanathan (17 sections, 286 lectures, ~11h 53m).</p>
+<p>The course is <strong>maths first</strong>, and so is this package. Every concept in
+the course has a matching chapter here <em>and</em> a runnable, auto-graded lab.</p>
+<h2 id="the-chapters">The chapters</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chapter</th>
+<th>Lab</th>
+<th>Quiz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="01-introduction.md">Introduction</a></td>
+<td>L01</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="02-photon-polarization.md">Quantum Physics Through Photon Polarization</a></td>
+<td>L02</td>
+<td>6</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="03-math-foundation.md">Math Foundation</a></td>
+<td>L03–L06</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="04-quantum-cryptography.md">Quantum Cryptography</a></td>
+<td>L07</td>
+<td>6</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="05-math-model.md">A Math Model for Quantum Physics</a></td>
+<td>L08</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="06-spin-states.md">Quantum Physics of Spin States</a></td>
+<td>L09</td>
+<td>6</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="07-modeling-spin.md">Modeling Quantum Spin States with Math</a></td>
+<td>L10</td>
+<td>6</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="08-reversible-irreversible.md">Reversible and Irreversible Transformations</a></td>
+<td>L11</td>
+<td>6</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="09-multi-qubit.md">Multi-Qubit Systems</a></td>
+<td>L11</td>
+<td>6</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="10-entanglement.md">Entanglement</a></td>
+<td>L11</td>
+<td>6</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="11-simulators.md">Superposition and Entanglement Simulators</a></td>
+<td>L12</td>
+<td>5</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="12-quantum-computing-model.md">The Quantum Computing Model</a></td>
+<td>L13</td>
+<td>6</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="13-qsharp.md">Microsoft Q# Programming</a></td>
+<td>L14</td>
+<td>6</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="14-ibm-quantum.md">IBM Quantum Experience</a></td>
+<td>L15</td>
+<td>4</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="15-qiskit.md">IBM Qiskit: Programming and Algorithms</a></td>
+<td>L15</td>
+<td>7</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="16-ml-foundation.md">Machine Learning Foundation</a></td>
+<td>L16</td>
+<td>8</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="17-quantum-ml.md">Quantum Machine Learning with Qiskit</a></td>
+<td>L17</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>Plus the <a href="appendix/appendix.md">appendix</a>: formula sheet, glossary and the
+API reference for the shared <code>qc101</code> library.</p>
+<h2 id="how-to-use-this-package">How to use this package</h2>
+<pre class="highlight"><code class="language-bash"># 1. set up (once)
+python -m venv .venv &amp;&amp; . .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. run every lab, with an auto-graded pass/fail table
+python tools/labcheck.py
+
+# 3. quiz yourself on any section
+python tools/quiz.py -s 4
+
+# 4. see how you are doing
+python tools/progress.py
+
+# 5. read the study site in your browser
+python tools/build_site.py &amp;&amp; python -m http.server -d site 8000</code></pre>
+<p>The labs are numbered to match the course's sections, and each lab says
+which course section it belongs to at the top of the file.</p>
+<h2 id="the-labs">The labs</h2>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Course section</th>
+<th>Checks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L01</td>
+<td>1 Introduction</td>
+<td>12</td>
+</tr>
+<tr>
+<td>L02</td>
+<td>2 Photon polarization</td>
+<td>17</td>
+</tr>
+<tr>
+<td>L03</td>
+<td>3 Boolean logic</td>
+<td>17</td>
+</tr>
+<tr>
+<td>L04</td>
+<td>3 Probability and statistics</td>
+<td>18</td>
+</tr>
+<tr>
+<td>L05</td>
+<td>3 Complex numbers</td>
+<td>29</td>
+</tr>
+<tr>
+<td>L06</td>
+<td>3 Linear algebra</td>
+<td>47</td>
+</tr>
+<tr>
+<td>L07</td>
+<td>4 BB84</td>
+<td>18</td>
+</tr>
+<tr>
+<td>L08</td>
+<td>5 Math model</td>
+<td>16</td>
+</tr>
+<tr>
+<td>L09</td>
+<td>6 Spin states</td>
+<td>13</td>
+</tr>
+<tr>
+<td>L10</td>
+<td>7 Dirac notation</td>
+<td>20</td>
+</tr>
+<tr>
+<td>L11</td>
+<td>8–10 Reversible gates, multi-qubit, entanglement</td>
+<td>29</td>
+</tr>
+<tr>
+<td>L12</td>
+<td>11 Simulators</td>
+<td>19</td>
+</tr>
+<tr>
+<td>L13</td>
+<td>12 Quantum computing model</td>
+<td>13</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>13 Q#</td>
+<td>10</td>
+</tr>
+<tr>
+<td>L15</td>
+<td>14–15 Qiskit</td>
+<td>16</td>
+</tr>
+<tr>
+<td>L16</td>
+<td>16 Machine learning foundation</td>
+<td>30</td>
+</tr>
+<tr>
+<td>L17</td>
+<td>17 Quantum machine learning</td>
+<td>24</td>
+</tr>
+</tbody>
+</table>
+<p><strong>350 auto-graded checks in total.</strong></p>
+<h2 id="where-the-material-came-from">Where the material came from</h2>
+<ul>
+<li>The course's own 17-section syllabus and lecture list.</li>
+<li>The official <a href="https://github.com/PacktPublishing/QC101-Quantum-Computing-and-Introduction-to-Quantum-Machine-Learning">Packt companion repository</a>
+  — the seven "Course Articles", the Q# project, the Python lab files and
+  the Java simulators.</li>
+<li>The course's own code, <strong>modernized</strong> for Qiskit 2.x: <code>BasicAer</code>,
+  <code>QuantumInstance</code>, <code>bind_parameters</code> and <code>qiskit.algorithms.Shor</code> were all
+  removed in Qiskit 1.0, so this package rebuilds those parts.</li>
+</ul>
+<p>Nothing here is a summary of the videos; it is a second, runnable
+implementation of everything the course teaches.</p>

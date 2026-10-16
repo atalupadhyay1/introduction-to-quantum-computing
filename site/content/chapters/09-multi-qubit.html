@@ -1,0 +1,133 @@
+<h1 id="section-9-multi-qubit-systems">Section 9 — Multi-Qubit Systems</h1>
+<blockquote>
+<p><strong>Course section</strong> 9 of 17 · <strong>Lab</strong> <a href="../labs/L11_reversible_entanglement/lab.py"><code>L11</code></a> · <strong>Quiz</strong> 6 questions</p>
+</blockquote>
+<h2 id="what-you-should-be-able-to-do">What you should be able to do</h2>
+<ul>
+<li>Build the <span class="arithmatex">\(2^n\)</span>-dimensional basis of an <span class="arithmatex">\(n\)</span>-qubit system.</li>
+<li>Use the Kronecker product to combine single-qubit states and operators.</li>
+<li>Read a multi-qubit bitstring in the right order (and spot the trap).</li>
+<li>Apply CNOT, SWAP, CSWAP and Toffoli by hand.</li>
+</ul>
+<h2 id="the-state-space-grows-exponentially">The state space grows exponentially</h2>
+<p><span class="arithmatex">\(n\)</span> qubits have <span class="arithmatex">\(2^n\)</span> basis states:</p>
+<table>
+<thead>
+<tr>
+<th>qubits</th>
+<th>basis states</th>
+<th>state vector length</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1024</td>
+<td>1024</td>
+</tr>
+<tr>
+<td>50</td>
+<td><span class="arithmatex">\(1.1 \times 10^{15}\)</span></td>
+<td><span class="arithmatex">\(1.1 \times 10^{15}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>A 50-qubit state vector is 16 MB — fine. A 1000-qubit one is 16 TB —
+hopeless. This is the trade-off the course keeps returning to: a
+simulator needs memory proportional to <span class="arithmatex">\(2^n\)</span>, a real device needs gates
+proportional to the circuit depth.</p>
+<h2 id="tensor-products">Tensor products</h2>
+<p>To build the joint state of two systems, take the Kronecker product:</p>
+<div class="arithmatex">\[
+\lvert\psi\rangle \otimes \lvert\phi\rangle
+\]</div>
+<p>With the standard convention that <span class="arithmatex">\(q_0\)</span> is the <strong>leftmost</strong> qubit, the index
+of a basis state is</p>
+<div class="arithmatex">\[
+\text{index} = b_0 2^{n-1} + b_1 2^{n-2} + \cdots + b_{n-1} 2^{0}
+\]</div>
+<p>so <span class="arithmatex">\(|0\rangle \otimes |1\rangle\)</span> is the <em>second</em> column of the 4×4
+identity:</p>
+<div class="arithmatex">\[
+|0\rangle \otimes |1\rangle =
+\begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix}
+\]</div>
+<p><strong>Order matters.</strong> <span class="arithmatex">\(|0\rangle \otimes |1\rangle \ne |1\rangle \otimes
+|0\rangle\)</span>: they are different basis states of the same space. And the
+ordering of qubits inside the tensor product is a <em>convention</em> — which is
+precisely where the Q# and Qiskit ordering traps in sections 13 and 15 come
+from.</p>
+<h2 id="two-qubit-gates">Two-qubit gates</h2>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNOT</td>
+<td>flip the target iff the control is <span class="arithmatex">\(\lvert1\rangle\)</span></td>
+</tr>
+<tr>
+<td>CZ</td>
+<td>flip the phase of the target iff the control is <span class="arithmatex">\(\lvert1\rangle\)</span></td>
+</tr>
+<tr>
+<td>SWAP</td>
+<td>exchange the two qubits</td>
+</tr>
+<tr>
+<td>CSWAP (Fredkin)</td>
+<td>swap the two targets iff the control is <span class="arithmatex">\(\lvert1\rangle\)</span></td>
+</tr>
+<tr>
+<td>Toffoli (CCNOT)</td>
+<td>flip the target iff <strong>both</strong> controls are <span class="arithmatex">\(\lvert1\rangle\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The CNOT is the workhorse. The SWAP can be built from three CNOTs, and the
+CSWAP from two CNOTs and one Toffoli. The Toffoli is genuinely
+three-qubit: it cannot be built from two-qubit gates alone.</p>
+<h2 id="writing-a-bitstring">Writing a bitstring</h2>
+<p>You must be explicit about the convention. In this repository, and in most
+textbooks, the state vector is written <strong>left to right</strong> in the order
+<span class="arithmatex">\(q_0, q_1, \dots\)</span>, so index 5 of a 3-qubit register is the bitstring
+<code>101</code> meaning <span class="arithmatex">\(q_0 = 1, q_1 = 0, q_2 = 1\)</span>.</p>
+<p>Qiskit, by contrast, stores qubit 0 as the <strong>least significant</strong> bit, so
+its <code>get_counts()</code> prints bitstrings most-significant-qubit first. Q#
+prints <code>(q2, q1, q0)</code>. All three are the <em>same</em> physics with a different
+bookkeeping convention, and confusing them is the single most common
+source of "wrong but plausible" answers in the course.</p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<pre class="highlight"><code class="language-bash">python labs/L11_reversible_entanglement/lab.py</code></pre>
+<h2 id="self-check">Self-check</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Can you write out the four basis states of a 2-qubit system?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you compute <span class="arithmatex">\(|0\rangle \otimes |1\rangle\)</span> as a column vector and
+      explain the index convention you used?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Do you know how many Toffoli gates you need to swap two qubits, and
+      why a Toffoli cannot be made from two-qubit gates?</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Can you state the difference between "the state vector is written
+      <span class="arithmatex">\(q_0\)</span> first" and "Qiskit's counts are printed <span class="arithmatex">\(q_{n-1}\)</span> first"?</li>
+</ul>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>Section 10 — <a href="10-entanglement.md">Entanglement</a>. The most famous property
+of quantum mechanics, and the one that makes quantum information different.</p>

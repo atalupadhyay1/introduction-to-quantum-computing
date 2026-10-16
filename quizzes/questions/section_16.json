@@ -1,0 +1,120 @@
+[
+  {
+    "id": "s16-q01",
+    "section": 16,
+    "type": "single",
+    "question": "What are the three ingredients of every machine-learning system?",
+    "choices": [
+      "Data, model, loss",
+      "Data, code, hardware",
+      "Model, loss, GPU",
+      "Features, labels, GPU"
+    ],
+    "answer": 0,
+    "explanation": "Data, a model with tunable parameters, and a loss that says how wrong the model is.",
+    "difficulty": 1
+  },
+  {
+    "id": "s16-q02",
+    "section": 16,
+    "type": "single",
+    "question": "What does gradient descent update?",
+    "choices": [
+      "The data",
+      "The parameters of the model",
+      "The loss function",
+      "The learning rate"
+    ],
+    "answer": 1,
+    "explanation": "The parameters are moved downhill along the gradient of the loss.",
+    "difficulty": 1
+  },
+  {
+    "id": "s16-q03",
+    "section": 16,
+    "type": "truefalse",
+    "question": "If the training error is very low but the test error is high, the model is overfitting.",
+    "choices": [],
+    "answer": "true",
+    "explanation": "Low training error plus high test error is the signature of overfitting (high variance).",
+    "difficulty": 1
+  },
+  {
+    "id": "s16-q04",
+    "section": 16,
+    "type": "single",
+    "question": "What does the sigmoid function output?",
+    "choices": [
+      "A real number of any size",
+      "A number between 0 and 1",
+      "A probability distribution over many classes",
+      "A vector"
+    ],
+    "answer": 1,
+    "explanation": "sigmoid(z) = 1/(1+e^-z) always lies strictly between 0 and 1.",
+    "difficulty": 1
+  },
+  {
+    "id": "s16-q05",
+    "section": 16,
+    "type": "multi",
+    "question": "What does L2 (ridge) regularization do?",
+    "choices": [
+      "Shrinks all the weights smoothly towards zero",
+      "Can drive some weights exactly to zero",
+      "Adds a penalty proportional to the sum of the squares of the weights",
+      "Always increases the training accuracy"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "Driving weights exactly to zero is the hallmark of L1, not L2.",
+    "difficulty": 1
+  },
+  {
+    "id": "s16-q06",
+    "section": 16,
+    "type": "single",
+    "question": "In the classical KNN of the course, what is the weight formula?",
+    "choices": [
+      "w = 1 / d^2",
+      "w = 1 - 0.25 * d^2",
+      "w = exp(-d)",
+      "w = d"
+    ],
+    "answer": 1,
+    "explanation": "w_i = 1 - 0.25 * d_i^2, with d the squared Euclidean distance.",
+    "difficulty": 1
+  },
+  {
+    "id": "s16-q07",
+    "section": 16,
+    "type": "single",
+    "question": "What is the decision boundary of a logistic regression model?",
+    "choices": [
+      "Where the probability is 0.5, i.e. a straight line in feature space",
+      "The curve where the probability is 0.5",
+      "Always a circle",
+      "The set of support vectors"
+    ],
+    "answer": 0,
+    "explanation": "The sigmoid is monotone, so p = 0.5 exactly when w.x + b = 0 -- a straight line.",
+    "difficulty": 1
+  },
+  {
+    "id": "s16-q08",
+    "section": 16,
+    "type": "single",
+    "question": "Why is a hidden layer needed in a neural network?",
+    "choices": [
+      "To make training faster",
+      "To introduce non-linearity, so the model can bend its decision boundary",
+      "To reduce the number of parameters",
+      "To store more data"
+    ],
+    "answer": 1,
+    "explanation": "Without a non-linearity, stacking linear layers is still a linear model.",
+    "difficulty": 1
+  }
+]
