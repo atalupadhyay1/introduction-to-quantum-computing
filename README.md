@@ -2,7 +2,7 @@
 
 A complete, hands-on study companion for the Udemy course
 **[QC101 — Introduction to Quantum Computing / Quantum Physics for Beginners](https://www.udemy.com/course/qc101-introduction-to-quantum-computing-quantum-physics-for-beginners/)**
-by **Kumaresan Ramanathan** (17 sections · 286 lectures · ~11h53m).
+
 
 Everything here is *runnable*. There is no pseudo-code: the 17 labs execute
 against a real quantum stack (a dependency-free simulator written for this
