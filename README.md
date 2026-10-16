@@ -235,10 +235,7 @@ The physics and the results are unchanged — only the API surface is.
 ## License & attribution
 
 The study material here is original work written to accompany the QC101
-course. The course itself is by **Kumaresan Ramanathan**; the Q# project and
-the simulator/algorithm exercises follow the structure of the official
-Packt companion materials (`PacktPublishing/QC101-Quantum-Computing-and-Introduction-to-Quantum-Machine-Learning`).
-Please support the course and the instructor.
+course. 
 
 The study site vendors **KaTeX 0.19** (`site/vendor/katex/`) so that the
 maths renders with no network access; KaTeX is MIT-licensed and its licence
